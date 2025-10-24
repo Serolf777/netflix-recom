@@ -1,3 +1,8 @@
+#Neflix-recom
+
+Practice testing for connecting a webpage to LLM to get dynamic results.
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
