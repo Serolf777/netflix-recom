@@ -24,7 +24,7 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
-    <title>React App</title>
+    <title>Netflix Recommendations</title>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
@@ -40,4 +40,10 @@
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
   </body>
+  <script>
+    const ws = new WebSocket("ws://localhost:8080/");
+    ws.addEventListener("open", (event) => {
+      console.log("WebSocket is connected.");
+    });
+  </script>
 </html>
