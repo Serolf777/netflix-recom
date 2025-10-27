@@ -1,27 +1,29 @@
 import "./netflixRecom.scss";
 import { useMemo, useState } from "react";
-import LanguageModel from "./LanguageModel.tsx";
+import { useForm } from 'react-hook-form';
 import { NetflixShow } from "./netflixShow.tsx";
+import { sampleData } from "./utilities/constants.tsx";
+//TODO: implement the language model for data rather than using consts 
+//import LanguageModel from "./LanguageModel.tsx";
 
 function App() {
-  const [loading, setLoading] = useState(false);
-
+  const [ loading, setLoading] = useState(false);
+  const { register, getValues } = useForm();
 
   function onChangeHandler() {
-    //do something with document.forms["test-form"].searchbar.value
+    //track users changes to "searchbar" value to give recommendations
   }
 
   function onClickHandler() {
     setLoading(true);
-    LanguageModel(document.forms["test-form"].searchbar.value, setLoading);
+    setTimeout(() => { 
+        console.log(getValues("searchbar")) 
+        setLoading(false);
+      }, 300);
   }
 
   let showArray = useMemo(() => {
-    return [
-        { showName: "show1", showData: "somethingCool1"}, 
-        { showName: "show2", showData: "somethingCool2" }, 
-        { showName: "show3", showData: "somethingCool3" }
-      ]
+    return sampleData;
   }, [])
 
   return (
@@ -45,11 +47,10 @@ function App() {
       <form name="test-form" onSubmit={(e) => e.preventDefault()}>
         <div className="search-header">Would you like to search for different results?</div>
 
-        <input type="text" name="searchbar" className="searchbar" />
+        <input type="text" className="searchbar" {...register("searchbar")} />
         <button
           type="submit"
           value="submit"
-          onChange={onChangeHandler}
           onClick={() => onClickHandler()}
         > Submit </button>
       </form>
