@@ -19,12 +19,13 @@ app.get("/data", async (req, res) => {
             const model = await client.llm.model("gpt-oss-20b");
 
             const chat = Chat.empty();
-            chat.append("system", "Provide the answer structured formated as per the following JSON schema: " 
+            chat.append("system", "Provide the answer structured formated as per the following JSON schema" + 
+                "and do not include ```json at beginning: " 
                 + JSON.stringify(NetflixShowData)
             );
             chat.append("user", "What are the top 3 netflix shows?");
-
             const result = await model.respond(chat);
+
             const parsedResult = JSON.parse(result.nonReasoningContent);
 
             res.json(parsedResult);
