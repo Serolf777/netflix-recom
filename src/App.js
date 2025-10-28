@@ -1,29 +1,27 @@
 import "./netflixRecom.scss";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { useForm } from 'react-hook-form';
 import { NetflixShow } from "./netflixShow.tsx";
 import { sampleData } from "./utilities/constants.tsx";
-//TODO: implement the language model for data rather than using consts 
 import LanguageModel from "./LanguageModel.tsx";
 
 function App() {
   const [ loading, setLoading] = useState(false);
   const { register, getValues } = useForm();
+  const [showsArray, setShowsArray] = useState(sampleData);
 
   function onChangeHandler() {
     //track users changes to "searchbar" value to give recommendations
   }
 
-  function onClickHandler() {
+  async function onClickHandler() {
     setLoading(true);
-    LanguageModel(getValues("searchbar"), setLoading);
+    const result = await LanguageModel(getValues("searchbar"), setLoading);
+    
+    if (result) {
+      setShowsArray(result);
+    } 
   }
-
-  let showArray = useMemo(() => {
-    return sampleData;
-  }, []);
-
-  
 
   return (
     <div className="App">
@@ -36,7 +34,7 @@ function App() {
       {loading ?
           <div> Loading</div>
           : (
-            showArray.map((show, showNumber) => {
+            showsArray.map((show, showNumber) => {
                 return <NetflixShow key={showNumber} showData={show} showNumber={showNumber}/>
               }
             )

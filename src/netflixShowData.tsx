@@ -1,4 +1,8 @@
 export interface netflixShowData {
-    showName: string;
-    showData: string;
+    ranking: number;
+    name: string;
+    rating: number;
+    link: string;
+    genre: string;
+    description: string;
 }

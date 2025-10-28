@@ -1,30 +1,21 @@
-//import { LMStudioClient } from "@lmstudio/sdk";
-//import { NetflixShowData } from "./utilities/constants.tsx";
-
-export default function LanguageModel(data : string, setLoading: (loading: boolean) => VoidFunction) {
-    async function LLMnetflixQuery() {
-        try {
-            /*
-            const client = new LMStudioClient();
-            const model = await client.llm.model("openai/gpt-oss-20b");
-            for await (const fragment of model.respond("What are the top 3 netflix shows?", 
-                { 
-                    structured : { type: "json", jsonSchema: NetflixShowData } 
-                }
-            )) 
-            {
-                console.info(fragment);
-            }
-            ~*/
-            console.log(data);
-        } catch (error) {
-            console.error("Error querying the language model:", error);
-        }
+//Will eventually take in data and use it to query the language model
+//For now, just simulating a fetch request to the server
+export async function LLMnetflixQuery() {
+    try {
+        const data = await fetch("http://localhost:8080/data")
+            .then(res => 
+                res.json()
+            );
+        return data;
+    } catch (error) {
+        console.error("Error querying the language model:", error);
     }
+}
 
-    console.log(data);
-    setTimeout(() => { 
-        LLMnetflixQuery();
-        setLoading(false);
-      }, 300);
+export default async function LanguageModel(data : string, setLoading: (loading: boolean) => VoidFunction) {
+    const result = await LLMnetflixQuery().finally(() => setLoading(false));
+
+    console.log("Language model result:", result);
+    
+    return result?.shows;
 }
