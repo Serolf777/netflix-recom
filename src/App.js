@@ -42,10 +42,14 @@ function App() {
       }
 
       <form name="test-form" onSubmit={(e) => e.preventDefault()}>
-        <div className="search-header">Would you like to search for different results?</div>
-
-        <input type="text" className="searchbar" {...register("searchbar")} />
+        <div className="search-header">Would you like to search using AI results?</div>
         <button type="submit" value="submit" onClick={() => onClickHandler()} > 
+          Submit 
+        </button>
+
+        <div className="search-header">Placeholder for future searches</div>
+        <input type="text" className="searchbar" {...register("searchbar")} />
+        <button type="submit" value="submit" > 
           Submit 
         </button>
       </form>
