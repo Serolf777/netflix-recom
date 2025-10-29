@@ -27,4 +27,16 @@
 .netflixShow {
     color: black;
     margin-bottom: 5px;
+    display: flex;
+    margin-left: 20%;
+    margin-right: 20%;
+
+    .show-image-container {
+        flex: 1;
+    }
+
+    .show-details {
+        flex: 1;
+        text-align: left;
+    }
 }

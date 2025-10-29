@@ -11,16 +11,14 @@ function App() {
   const [ loading, setLoading] = useState(false);
   const { register, getValues } = useForm();
   const [showsArray, setShowsArray] = useState(sampleData);
-  const [searchGenre, setSearchGenre] = useState("");
 
   function onChangeHandler() {
-    setSearchGenre(getValues("genres"));
     console.log("Selected genre:", getValues("genres"));
   }
 
   async function onClickHandler() {
     setLoading(true);
-    const result = await LanguageModel(getValues("searchbar"), setLoading);
+    const result = await LanguageModel(getValues("genres"), setLoading);
     
     if (result) {
       setShowsArray(result);
@@ -30,7 +28,7 @@ function App() {
   return (
     <div className="App">
       <h1>
-        Welcome to testing site, where we do tests.
+        Welcome to Netflix recommendations!
       </h1>
 
       <h3 className="header">These are the top shows on netflix RIGHT NOW!</h3>

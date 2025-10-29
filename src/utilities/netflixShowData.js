@@ -9,8 +9,9 @@ export const NetflixShowData = {
             link: { type: "string" },
             genre: { type: "string" },
             description: { type: "string" },
+            picture: { type: "string" },
         },
-        required: ["ranking", "name", "rating", "link", "genre", "description"],
+        required: ["ranking", "name", "rating", "link", "genre", "description", "picture"],
     },
     required: ["shows"],
 };

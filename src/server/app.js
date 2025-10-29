@@ -13,7 +13,7 @@ app.use(
     })
 );
 
-app.get("/data", async (req, res) => {
+app.get("/data/:genre", async (req, res) => {
     try {
             const client = new LMStudioClient();
             const model = await client.llm.model("gpt-oss-20b");
@@ -23,7 +23,8 @@ app.get("/data", async (req, res) => {
                 "and do not include ```json at beginning: " 
                 + JSON.stringify(NetflixShowData)
             );
-            chat.append("user", "What are the top 3 netflix shows?");
+            chat.append("user", `What are the top 3 netflix shows in ${req.params.genre} genre?` +
+                "Pull this from netflix data and pull image links from their database");
             const result = await model.respond(chat);
 
             const parsedResult = JSON.parse(result.nonReasoningContent);
