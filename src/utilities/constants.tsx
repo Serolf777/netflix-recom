@@ -25,6 +25,15 @@ export const sampleData = [
     },
 ];
 
+export const genresList = [
+    "All",
+    "Action",
+    "Comedy",
+    "Drama",
+    "Horror",
+    "Sci-Fi"
+];
+
 export interface NetflixShowData {
     ranking: number;
     name: string;
