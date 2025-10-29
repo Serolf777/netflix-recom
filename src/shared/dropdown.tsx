@@ -1,4 +1,4 @@
-import "../netflixRecom.scss";
+import "../styles/netflixRecom.scss";
 import { useFormContext } from 'react-hook-form';
 
 type NetflixShowProps = {
@@ -12,7 +12,7 @@ export const Dropdown = ({ genres, onChangeHandler } : NetflixShowProps) => {
 
     return (
         <div className="dropdown-menu"> 
-          <label>Select a genre: </label>
+          <label className="dropdown-label">Select a genre: </label>
           <select id="genres" {...register("genres", { onChange: onChangeHandler })}>
             {genres.map((genre) => (
               <option key={genre} value={genre.toLowerCase()}>{genre}</option>

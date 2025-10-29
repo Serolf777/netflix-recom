@@ -1,4 +1,4 @@
-import "./netflixRecom.scss";
+import "./styles/netflixRecom.scss";
 import { useState } from "react";
 import { FormProvider, useForm } from 'react-hook-form';
 import { NetflixShow } from "./netflixShow.tsx";
@@ -27,14 +27,14 @@ function App() {
 
   return (
     <div className="App">
-      <h1>
+      <div className="site-header">
         Welcome to Netflix recommendations!
-      </h1>
+      </div>
 
       <h3 className="header">These are the top shows on netflix RIGHT NOW!</h3>
 
       {loading ?
-          <div> Loading</div>
+          <div class="lds-dual-ring"></div>
           : (
             showsArray.map((show, showNumber) => {
                 return <NetflixShow key={showNumber} showData={show} showNumber={showNumber}/>
@@ -43,11 +43,15 @@ function App() {
         )
       }
       <FormProvider {...{ register, getValues }}>
-        <form name="test-form" onSubmit={(e) => e.preventDefault()}>
-          <div className="search-header">Would you like to search using AI results?</div>
-          <button type="submit" value="submit" onClick={() => onClickHandler()} > 
-            Submit 
-          </button>
+        <form name="test-form" className="netflix-form" onSubmit={(e) => e.preventDefault()}>
+          <div className="ai-search-section">
+            <div className="search-header">Would you like to search using AI results?</div>
+            <div className="button-container">
+              <button type="submit" value="submit" onClick={() => onClickHandler()} > 
+                Submit 
+              </button>
+            </div>
+          </div>
 
           <div className="search-header">Would you like to narrow down by genre?</div>
           <Dropdown genres={genresList} onChangeHandler={onChangeHandler} register={() => register("genres")} />
