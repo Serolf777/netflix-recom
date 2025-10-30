@@ -1,5 +1,5 @@
 import "./styles/netflixRecom.scss";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FormProvider, useForm } from 'react-hook-form';
 import { NetflixShow } from "./netflixShow.tsx";
 import { sampleData } from "./utilities/constants.tsx";
@@ -10,11 +10,15 @@ import { genresList } from "./utilities/constants.tsx";
 function App() {
   const [ loading, setLoading] = useState(false);
   const { register, getValues } = useForm();
-  const [showsArray, setShowsArray] = useState(sampleData);
+  const [showsArray, setShowsArray] = useState([]);
 
   function onChangeHandler() {
     console.log("Selected genre:", getValues("genres"));
   }
+
+  useEffect(() => {
+    setShowsArray(sampleData);
+  }, [sampleData]);
 
   async function onClickHandler() {
     setLoading(true);
@@ -27,8 +31,10 @@ function App() {
 
   return (
     <div className="App">
-      <div className="site-header">
-        Welcome to Netflix recommendations!
+      <div className="header-section">
+        <div className="site-header">
+          Welcome to Netflix recommendations!
+        </div>
       </div>
 
       <h3 className="header">These are the top shows on netflix RIGHT NOW!</h3>
@@ -62,6 +68,12 @@ function App() {
           </button>
         </form>
       </FormProvider>
+
+      <div className="footer">
+          <div className="footer-text">
+            This app is created by Alejandro Flores.
+          </div>
+        </div>
     </div>
   );
 }

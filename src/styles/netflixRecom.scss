@@ -1,5 +1,7 @@
-html {
+html, body {
     background: #F5EDED;
+    margin: 0;
+    padding: 0;
 }
 
 .App {
@@ -9,15 +11,26 @@ html {
     color: red;
     background: #F5EDED;
 
-    .site-header {
-        font-size: 24px;
-        font-weight: bold;
-        margin-bottom: 20px;
-    }   
+    .header-section {
+        position: fixed;
+        left: 0;
+        top: -12px;
+        width: 100%;
+        border: 2px solid black;
+        background-color: red;
+        border-radius: 12px;
+
+        .site-header {
+            padding-top: 12px;
+            font-size: 24px;
+            font-weight: bold;
+            color: #F0F8FF;
+        } 
+    }  
 }
 
 .search-header {
-    margin-top: 50px;
+    margin-top: 24px;
     margin-bottom: 10px;
     color: blue;
     font-weight: bold;
@@ -29,7 +42,7 @@ html {
 }
 
 .header {
-    margin-top: 50px;
+    margin-top: 40px;
 }
 
 .netflix-results {
@@ -72,6 +85,7 @@ html {
     align-items: center;
     margin-left: 20%;
     margin-right: 20%;
+    margin-bottom: 36px;
 
     .ai-search-section {
         display: flex;
@@ -98,7 +112,6 @@ html {
 }
 
 .lds-dual-ring {
-  /* change color here */
   color: #1c4c5b
 }
 .lds-dual-ring,
@@ -128,4 +141,23 @@ html {
   100% {
     transform: rotate(360deg);
   }
+}
+
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    margin-bottom: -12px;
+    height: 40px;
+    border: 2px solid black;
+    background-color: red;
+    border-radius: 12px;
+
+    .footer-text {
+        padding-top: 4px;
+        font-size: 16px;
+        font-weight: bold;
+        color: #F0F8FF;
+    }   
 }
