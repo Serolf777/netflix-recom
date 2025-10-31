@@ -6,6 +6,7 @@ import { sampleData } from "./utilities/constants.tsx";
 import LanguageModel from "./LanguageModel.tsx";
 import { Dropdown } from "./shared/dropdown.tsx";
 import { genresList } from "./utilities/constants.tsx";
+import { Header } from "./header/header.tsx";
 
 function App() {
   const [ loading, setLoading] = useState(false);
@@ -31,11 +32,7 @@ function App() {
 
   return (
     <div className="App">
-      <div className="header-section">
-        <div className="site-header">
-          Welcome to Netflix recommendations!
-        </div>
-      </div>
+      <Header />
       <div className="site-body">
         <h3 className="announcement">These are the top shows on netflix RIGHT NOW!</h3>
 

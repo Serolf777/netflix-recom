@@ -9,7 +9,7 @@ html, body {
     height: 100%;
     margin-top: 20px;
     text-align: center;
-    color: red;
+    color: #C22727;
     background: #F5EDED;
 
     .header-section {
@@ -17,18 +17,56 @@ html, body {
         left: 0;
         right: 0;
         top: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         border: 2px solid black;
-        background-color: red;
+        background-color: #C22727;
         border-bottom-left-radius: 12px;
         border-bottom-right-radius: 12px;
 
-        .site-header {
-            font-size: 24px;
+        .site-header-logo {
+            margin-right: 0;
+            display: inline-flex;
+            width: 150px;
+            font-size: 12px;
+            position: relative;
+
+            .site-header-logo-text {
+                word-wrap: break-word;
+                align-content: center;
+            }
+            .site-header-logo-text:hover {
+                cursor: pointer;
+                text-decoration: underline;
+            }
+        }
+
+        .site-header-logo, .site-header-text {
             font-weight: bold;
             color: #F0F8FF;
+        }
+
+        .site-header-text {
+            font-size: 24px;
+            margin-left: auto;
+            margin-right: auto;
             margin-top: 6px;
             margin-bottom: 6px;
-        } 
+        }
+
+        .header-dropdown {
+            color: black;
+            position: absolute;
+            top: 52px;
+            left: 20px;
+            background: #C22727;
+            border-left: 2px solid black;
+            border-right: 2px solid black;
+            border-bottom: 2px solid black;
+            border-bottom-left-radius: 12px;
+            border-bottom-right-radius: 12px;
+        }
     }
 
     .site-body {
@@ -165,7 +203,7 @@ html, body {
     align-items: flex-end;
     height: 32px;
     border: 2px solid black;
-    background-color: red;
+    background-color: #C22727;
     border-top-left-radius: 12px;
     border-top-right-radius: 12px;
 
