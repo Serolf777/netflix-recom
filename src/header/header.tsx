@@ -1,4 +1,5 @@
 import "../styles/netflixRecom.scss";
+// @ts-ignore
 import companyLogo from "../resources/companyLogo.png";
 import { useState } from "react";
 import { HeaderDropdown } from "./headerDropdown.tsx";

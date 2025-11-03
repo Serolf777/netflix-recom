@@ -6,3 +6,7 @@ export interface netflixShowData {
     genre: string;
     description: string;
 }
+
+export interface errorData {
+    error: string
+}

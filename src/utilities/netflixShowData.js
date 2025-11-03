@@ -15,3 +15,11 @@ export const NetflixShowData = {
     },
     required: ["shows"],
 };
+
+export const ErrorData = {
+    type: "object",
+    properties: {
+        error: { type: "string" },
+    },
+    required: ["error"],
+};
