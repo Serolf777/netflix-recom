@@ -1,6 +1,10 @@
 # Neflix-recom
 
-Practice testing for connecting a webpage to LLM to get dynamic results.
+Webpage that is connected to a local LLM to get dynamic results and leverages react for dynamically loading data on the webpage.
+Uses npm front end and node back end.
+
+The LLM leveraged comes from LM studio OpenAi's gpt-oss 20B and the server expects to be reachable at "http://127.0.0.1:1234".
+It can be downloaded [here](https://lmstudio.ai/). 
 
 
 # Getting Started with Create React App
@@ -18,6 +22,12 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
 The page will reload when you make changes.\
 You may also see any lint errors in the console.
+
+### `npm run start:dev`
+
+Runs the app in the development mode and also runs the server using concurrently.\
+
+Much like "npm start" the page will reload when changes are made and lint errors appear in the console.
 
 ### `npm test`
 
