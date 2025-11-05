@@ -19,12 +19,8 @@ app.get("/data/:genre", async (req, res) => {
             const model = await client.llm.model("gpt-oss-20b");
 
             const chat = Chat.empty();
-            chat.append("system", "Pull this from netflix data and pull image links from their database." +
-                "Provide the answer structured formated as per the following JSON schema" + 
-                "and do not include ```json at beginning: " 
-                + JSON.stringify(NetflixShowData)
-            );
-            chat.append("user", `What are the top 3 netflix shows in ${req.params.genre}`);
+            chat.append("system", defaultPrompt);
+            chat.append("user", `What are the top 3 netflix shows ${req.params.genre !== 'all' ? `in ${req.params.genre}`: ""}`);
             const result = await model.respond(chat);
 
             const parsedResult = JSON.parse(result.nonReasoningContent);
@@ -47,11 +43,7 @@ app.get("/userSearch", async (req, res) => {
             chat.append("system", "Verify if user's query is relevant to Netflix shows and if not" +
                 "return an error stating 'No relevant shows found formatted per following JSON schema " +
                 JSON.stringify(ErrorData) +
-                "Pull this from netflix data and pull image links from their database." +
-                "Provide the answer structured formated as per the following JSON schema." +
-                JSON.stringify(NetflixShowData) +
-                "Make sure to not include ```json at beginning: "
-            );
+                defaultPrompt);
             chat.append("user", `${req.query.search}?`);
             const result = await model.respond(chat);
 
@@ -69,3 +61,7 @@ app.get("/userSearch", async (req, res) => {
 app.listen(8080, () => {
     console.log("Server is running on http://localhost:8080");
 });
+
+const defaultPrompt = `Pull this from netflix data and pull image links from their database. 
+    Provide the answer structured formated as per the following JSON schema and do not include 
+    \`\`\`json at beginning: ${JSON.stringify(NetflixShowData)}`
