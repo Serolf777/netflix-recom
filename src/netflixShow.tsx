@@ -1,7 +1,7 @@
 import { NetflixShowData } from "./utilities/constants.tsx";
 import "./styles/netflixRecom.scss";
 
-type NetflixShowProps = {
+interface NetflixShowProps {
     showData: NetflixShowData;
 }
 

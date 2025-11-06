@@ -1,4 +1,3 @@
-import "./styles/netflixRecom.scss";
 import { useEffect, useState } from "react";
 import { FormProvider, useForm } from 'react-hook-form';
 import { NetflixShow } from "./netflixShow.tsx";
@@ -7,12 +6,15 @@ import { LanguageModel, LanguageModelSearch } from "./LanguageModel.tsx";
 import { Dropdown } from "./shared/dropdown.tsx";
 import { genresList } from "./utilities/constants.tsx";
 import { Header } from "./header/header.tsx";
+import classNames from "classnames";
+import Modal from './shared/modal.tsx'
 
 function App() {
   const [ loading, setLoading] = useState(false);
   const { register, getValues } = useForm();
   const [showsArray, setShowsArray] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
+  const [showModal, setShowModal] = useState(false);
 
   function onChangeHandler() {
     console.log("Selected genre:", getValues("genres"));
@@ -47,8 +49,10 @@ function App() {
   }
 
   return (
-    <div className="App">
-      <Header />
+    <div className={classNames("App", {
+      ["modal-open"] : showModal
+    })}>
+      <Header modalOpen={showModal} toggleModal={setShowModal} />
       <div className="site-body">
         <h3 className="announcement">These are the top shows on netflix RIGHT NOW!</h3>
 
@@ -88,10 +92,14 @@ function App() {
       </div>
 
       <div className="footer">
-          <div className="footer-text">
-            This app is created by Alejandro Flores.
-          </div>
+        <div className="footer-text">
+          This app is created by Alejandro Flores.
         </div>
+      </div>
+        
+        {showModal && 
+            <Modal modalOpen={showModal} toggleModal={setShowModal}/>
+        }
     </div>
   );
 }
