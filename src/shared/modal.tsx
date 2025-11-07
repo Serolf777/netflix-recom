@@ -1,5 +1,6 @@
 import "../styles/netflixRecom.scss";
 import {  useEffect, useRef } from "react";
+import CloseIcon from '@mui/icons-material/Close'
 
 export interface ModalProps {
     modalOpen: boolean;
@@ -38,7 +39,14 @@ export default function Modal({ modalOpen, toggleModal } : ModalProps) {
 
     return (
         <div className="modal" ref={ref} >
-            Sign in
+            <div className="main-modal">
+                <div className="modal-header">
+                    <CloseIcon className="close-button" onClick={closeModal}/>
+                </div>
+
+                <div>Sign in placeholder</div>
+            </div>
+            <div className="background"></div>
         </div>
     )
 }
