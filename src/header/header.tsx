@@ -1,15 +1,16 @@
 import "../styles/netflixRecom.scss";
 // @ts-ignore
 import companyLogo from "../resources/companyLogo.png";
-import { useState } from "react";
-import { HeaderDropdown } from "./headerDropdown.tsx";
+import { useState, FC } from "react";
+import HeaderDropdown from "./headerDropdown.tsx";
 
 export interface HeaderProps {
     modalOpen: boolean;
     toggleModal: (toggle: boolean) => void;
+    toggleSlidein: (toggle: boolean) => void;
 }
 
-export const Header = ({ modalOpen, toggleModal }: HeaderProps ) => {
+const Header: FC<HeaderProps> = ({ toggleModal, toggleSlidein }) => {
     const [dropdownOpen, setDropdownOpen] = useState(false);
 
     function signIn() {
@@ -33,11 +34,18 @@ export const Header = ({ modalOpen, toggleModal }: HeaderProps ) => {
             <div className="site-header-text">
                 Welcome to Netflix recommendations!
             </div>
+            
+            <div className="slidein-button" onClick={() => toggleSlidein(true)}>
+                Slidein
+            </div>
 
             <span className="divider" />
+            
             <div className="sign-in-button" onClick={signIn}>
                     Sign in!
             </div>
         </div>
     )
-}
+};
+
+export default Header;

@@ -1,6 +1,6 @@
 import "../styles/netflixRecom.scss";
 
-export const HeaderDropdown = () => {
+const HeaderDropdown = () => {
     return (
         <div className="header-dropdown">
             <div>This will tell you some important information!</div>
@@ -9,3 +9,5 @@ export const HeaderDropdown = () => {
         </div>
     );
 }
+
+export default HeaderDropdown;

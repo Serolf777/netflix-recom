@@ -1,13 +1,14 @@
 import "../styles/netflixRecom.scss";
 import { useFormContext } from 'react-hook-form';
+import { FC } from 'react';
 
-type NetflixShowProps = {
+export type NetflixShowProps = {
     genres: string[];
     onChangeHandler: () => void;
     register: () => void;
 }
 
-export const Dropdown = ({ genres, onChangeHandler } : NetflixShowProps) => {
+const Dropdown: FC<NetflixShowProps> = ({ genres, onChangeHandler }) => {
     const { register } = useFormContext();
 
     return (
@@ -21,3 +22,5 @@ export const Dropdown = ({ genres, onChangeHandler } : NetflixShowProps) => {
         </div>
     )
 }
+
+export default Dropdown;

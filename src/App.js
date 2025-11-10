@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
 import { FormProvider, useForm } from 'react-hook-form';
-import { NetflixShow } from "./netflixShow.tsx";
+import NetflixShow from "./netflixShow.tsx";
 import { sampleData } from "./utilities/constants.tsx";
 import { LanguageModel, LanguageModelSearch } from "./LanguageModel.tsx";
-import { Dropdown } from "./shared/dropdown.tsx";
+import Dropdown from "./shared/dropdown.tsx";
 import { genresList } from "./utilities/constants.tsx";
-import { Header } from "./header/header.tsx";
+import Header from "./header/header.tsx";
 import classNames from "classnames";
 import Modal from './shared/modal.tsx'
+import Signin from "./shared/signin.tsx";
+import SlideinModal from './shared/slideinModal.tsx'
 
 function App() {
   const [ loading, setLoading] = useState(false);
@@ -15,6 +17,7 @@ function App() {
   const [showsArray, setShowsArray] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
   const [showModal, setShowModal] = useState(false);
+  const [showSlidein, setShowSlidein] = useState(false);
 
   function onChangeHandler() {
     console.log("Selected genre:", getValues("genres"));
@@ -52,7 +55,7 @@ function App() {
     <div className={classNames("App", {
       ["modal-open"] : showModal
     })}>
-      <Header modalOpen={showModal} toggleModal={setShowModal} />
+      <Header modalOpen={showModal} toggleModal={setShowModal} toggleSlidein={setShowSlidein}/>
       <div className="site-body">
         <h3 className="announcement">These are the top shows on netflix RIGHT NOW!</h3>
 
@@ -97,9 +100,11 @@ function App() {
         </div>
       </div>
         
-        {showModal && 
-            <Modal modalOpen={showModal} toggleModal={setShowModal}/>
-        }
+      <Modal modalOpen={showModal} toggleModal={setShowModal}>
+        <Signin submitClicked={() => setShowModal(false)}/> 
+      </Modal>
+
+      <SlideinModal slideinOpen={showSlidein} toggleSlidein={setShowSlidein} />
     </div>
   );
 }

@@ -1,52 +1,42 @@
 import "../styles/netflixRecom.scss";
-import {  useEffect, useRef } from "react";
+import {  useEffect, useState, FC, ReactNode } from "react";
 import CloseIcon from '@mui/icons-material/Close'
 
 export interface ModalProps {
     modalOpen: boolean;
     toggleModal: (toggle: boolean) => void;
+    children: ReactNode;
 }
 
-export default function Modal({ modalOpen, toggleModal } : ModalProps) {
-    const ref = useRef<HTMLDivElement | null>(null);
-
+const Modal: FC<ModalProps> = ({ modalOpen, toggleModal, children }) => {
     function closeModal() {
         document.body.classList.remove('modal-open');
-        toggleModal(false)
+        toggleModal(false);
     }
 
     useEffect(() => {
         if (modalOpen) {
             document.body.classList.add('modal-open');
         } else {
-            document.body.classList.remove('modal-open');
+            closeModal();
         }
     }, [modalOpen]);
-    
-    useEffect(() => {
-        const handleOutsideClick = (event: MouseEvent) => {
-            if (ref.current && !ref.current.contains(event.target as Node)) {
-                closeModal();
-            }
-        }
 
-        window.addEventListener("mousedown", handleOutsideClick);
-
-        return () => {
-            window.removeEventListener("mousedown", handleOutsideClick);
-        }
-    }, [])
+    if (!modalOpen) return <></>;
 
     return (
-        <div className="modal" ref={ref} >
+        <div className="modal">
             <div className="main-modal">
                 <div className="modal-header">
                     <CloseIcon className="close-button" onClick={closeModal}/>
                 </div>
 
-                <div>Sign in placeholder</div>
+                {children}
+
             </div>
             <div className="background"></div>
         </div>
     )
-}
+};
+
+export default Modal;

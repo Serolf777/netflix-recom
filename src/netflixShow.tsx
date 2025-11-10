@@ -1,3 +1,4 @@
+import { FC } from 'react';
 import { NetflixShowData } from "./utilities/constants.tsx";
 import "./styles/netflixRecom.scss";
 
@@ -5,7 +6,7 @@ interface NetflixShowProps {
     showData: NetflixShowData;
 }
 
-export const NetflixShow = ({ showData } : NetflixShowProps) => {
+export const NetflixShow: FC<NetflixShowProps> = ({ showData }) => {
     return (
         <div className="netflixShow">
             <div className="show-image-container">
@@ -21,3 +22,5 @@ export const NetflixShow = ({ showData } : NetflixShowProps) => {
         </div>
     )
 }
+
+export default NetflixShow;
