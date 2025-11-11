@@ -10,6 +10,7 @@ import classNames from "classnames";
 import Modal from './shared/modal.tsx'
 import Signin from "./shared/signin.tsx";
 import SlideinModal from './shared/slideinModal.tsx'
+import { isMobile } from "./shared/isMobile.tsx";
 
 function App() {
   const [ loading, setLoading] = useState(false);
@@ -18,6 +19,7 @@ function App() {
   const [errorMessage, setErrorMessage] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [showSlidein, setShowSlidein] = useState(false);
+  const mobile = isMobile();
 
   function onChangeHandler() {
     console.log("Selected genre:", getValues("genres"));
@@ -57,7 +59,9 @@ function App() {
     })}>
       <Header modalOpen={showModal} toggleModal={setShowModal} toggleSlidein={setShowSlidein}/>
       <div className="site-body">
-        <h3 className="announcement">These are the top shows on netflix RIGHT NOW!</h3>
+        <h3 className={classNames("announcement", {
+          ["mobile"] : mobile
+        })}>These are the top shows on netflix RIGHT NOW!</h3>
 
         {loading ?
             <div className="lds-dual-ring"></div>

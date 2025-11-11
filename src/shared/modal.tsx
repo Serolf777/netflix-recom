@@ -1,6 +1,8 @@
 import "../styles/netflixRecom.scss";
 import {  useEffect, useState, FC, ReactNode } from "react";
 import CloseIcon from '@mui/icons-material/Close'
+import { isMobile } from "./isMobile.tsx";
+import classNames from "classnames";
 
 export interface ModalProps {
     modalOpen: boolean;
@@ -9,6 +11,7 @@ export interface ModalProps {
 }
 
 const Modal: FC<ModalProps> = ({ modalOpen, toggleModal, children }) => {
+    const mobile = isMobile();
     function closeModal() {
         document.body.classList.remove('modal-open');
         toggleModal(false);
@@ -25,8 +28,12 @@ const Modal: FC<ModalProps> = ({ modalOpen, toggleModal, children }) => {
     if (!modalOpen) return <></>;
 
     return (
-        <div className="modal">
-            <div className="main-modal">
+        <div className={classNames("modal", {
+            ["mobile"] : mobile
+        })}>
+            <div className={classNames("main-modal", {
+                ["mobile"] : mobile
+            })}>
                 <div className="modal-header">
                     <CloseIcon className="close-button" onClick={closeModal}/>
                 </div>

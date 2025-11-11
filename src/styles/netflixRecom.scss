@@ -121,6 +121,10 @@ body.modal-open {
 
 .announcement {
     margin-top: 40px;
+
+    &.mobile {
+        padding-top: 40px;
+    }
 }
 
 .netflix-results {
@@ -241,8 +245,6 @@ body.modal-open {
 }
 
 .modal {
-    top: 20%;
-    right: 40%;
     position: fixed;
     height: 400px;
     width: 400px;
@@ -250,13 +252,24 @@ body.modal-open {
     background: #F0F8FF;
     color: black;
 
+    &.mobile {
+        width: 100%;
+    }
+
     .main-modal {
         position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
         height: 400px;
         width: 400px;;
         z-index: 1000;
         opacity: 1;
         background: white;
+
+        &.mobile {
+            width: 100%;
+        }
 
         .modal-header {
             display: flex;
@@ -305,6 +318,12 @@ body.modal-open {
         background: #F0F8FF;
         color: black;
         animation: slidein-content 0.5s forwards;
+    }
+
+    &.mobile {
+        .slidein-content {
+            width: 100%;
+        }
     }
     
     @keyframes slidein-content {
