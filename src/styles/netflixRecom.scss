@@ -40,6 +40,7 @@ body.modal-open {
             .site-header-logo-text {
                 word-wrap: break-word;
                 align-content: center;
+                margin-right: 4px;
             }
             .site-header-logo-text:hover {
                 cursor: pointer;
@@ -67,12 +68,16 @@ body.modal-open {
             margin-right: auto;
             margin-top: 6px;
             margin-bottom: 6px;
+
+            &.mobile {
+                font-size: 16px;
+            }
         }
 
         .header-dropdown {
             color: black;
             position: absolute;
-            top: 52px;
+            top: 100%;
             left: 20px;
             background: #C22727;
             border-left: 2px solid black;
@@ -123,7 +128,7 @@ body.modal-open {
     margin-top: 40px;
 
     &.mobile {
-        padding-top: 40px;
+        margin-top: 72px; 
     }
 }
 
@@ -376,5 +381,55 @@ body.modal-open {
         .username-input, .password-input {
             margin-top: 10px;
         }
+    }
+
+    .register-footer {
+        display: inline-flex;
+        padding-top: 10px;
+
+        .register-button {
+            color: blue;
+            padding-left: 6px;
+
+            &:hover {
+                text-decoration: underline;
+                cursor: pointer;
+            }
+        }
+    }
+}
+
+.register-modal {
+    .register-header {
+        font-weight: bold;
+        font-size: 16px;
+        margin-bottom: 20px;
+    }
+
+    .register-details {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+
+        .username, .passwords {
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        .password-requirements {
+            font-style: italic;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        .username-input, .password-input {
+            margin-top: 10px;
+        }
+    }
+
+    .error-message {
+        font-size: 14px;
+        color: red;
     }
 }

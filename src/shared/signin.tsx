@@ -2,10 +2,10 @@ import { FC } from 'react';
 
 interface SigninProps {
     submitClicked: () => void;
+    registerClicked: () => void;
 }
 
-const Signin: FC<SigninProps> = ({ submitClicked }) => {
-
+const Signin: FC<SigninProps> = ({ submitClicked, registerClicked }) => {
     return (
         <div className="signin">
             <div className="signin-header">Sign-in</div>
@@ -19,6 +19,14 @@ const Signin: FC<SigninProps> = ({ submitClicked }) => {
                     <input type="password" id="password" name="password" className="password-input"/>
                 </div>
                 <button onClick={submitClicked}>Submit</button>
+                <div className="register-footer">
+                    <div>
+                        Don't have an account?
+                    </div>
+                    <div className="register-button" onClick={registerClicked}>
+                        Register.
+                    </div>
+                </div>
             </div>
         </div>
     )

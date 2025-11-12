@@ -3,6 +3,8 @@ import "../styles/netflixRecom.scss";
 import companyLogo from "../resources/companyLogo.png";
 import { useState, FC } from "react";
 import HeaderDropdown from "./headerDropdown.tsx";
+import { isMobile } from "../shared/isMobile.tsx";
+import classNames from "classnames";
 
 export interface HeaderProps {
     modalOpen: boolean;
@@ -12,6 +14,7 @@ export interface HeaderProps {
 
 const Header: FC<HeaderProps> = ({ toggleModal, toggleSlidein }) => {
     const [dropdownOpen, setDropdownOpen] = useState(false);
+    const mobile = isMobile();
 
     function signIn() {
         toggleModal(true);
@@ -21,7 +24,9 @@ const Header: FC<HeaderProps> = ({ toggleModal, toggleSlidein }) => {
         <div className="header-section">
             <div className="site-header-logo">
                 <img src={companyLogo} height="50px" width="50px"/>
-                <div className="site-header-logo-text" onClick={() => setDropdownOpen(!dropdownOpen)}>
+                <div className={classNames("site-header-logo-text", {
+                    ["mobile"] : mobile
+                })} onClick={() => setDropdownOpen(!dropdownOpen)}>
                     Click me to know more!
                 </div>
                 {dropdownOpen && 
@@ -31,9 +36,12 @@ const Header: FC<HeaderProps> = ({ toggleModal, toggleSlidein }) => {
 
             <span className="divider" />
 
-            <div className="site-header-text">
+            <div className={classNames("site-header-text", {
+                ["mobile"] : mobile
+            })}>
                 Welcome to Netflix recommendations!
-            </div>
+            </div> 
+
             
             <div className="slidein-button" onClick={() => toggleSlidein(true)}>
                 Slidein

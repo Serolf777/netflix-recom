@@ -11,6 +11,7 @@ import Modal from './shared/modal.tsx'
 import Signin from "./shared/signin.tsx";
 import SlideinModal from './shared/slideinModal.tsx'
 import { isMobile } from "./shared/isMobile.tsx";
+import Register from "./shared/register.tsx";
 
 function App() {
   const [ loading, setLoading] = useState(false);
@@ -19,6 +20,7 @@ function App() {
   const [errorMessage, setErrorMessage] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [showSlidein, setShowSlidein] = useState(false);
+  const [registerModalOpen, setRegisterModalOpen] = useState(false);
   const mobile = isMobile();
 
   function onChangeHandler() {
@@ -53,19 +55,27 @@ function App() {
     }
   }
 
+  function registerClicked() {
+    setShowModal(false);
+    setRegisterModalOpen(true);
+  }
+
   return (
     <div className={classNames("App", {
       ["modal-open"] : showModal
     })}>
       <Header modalOpen={showModal} toggleModal={setShowModal} toggleSlidein={setShowSlidein}/>
       <div className="site-body">
-        <h3 className={classNames("announcement", {
-          ["mobile"] : mobile
-        })}>These are the top shows on netflix RIGHT NOW!</h3>
 
-        {loading ?
-            <div className="lds-dual-ring"></div>
-            : errorMessage !== "" ? (
+      <h3 className={classNames("announcement", {
+        ["mobile"] : mobile
+      })}>
+        These are the top shows on netflix RIGHT NOW!
+      </h3>
+
+      {loading ?
+          <div className="lds-dual-ring"/>
+          : errorMessage !== "" ? (
               <div className="error-message">{errorMessage}</div>
             ) : (
               showsArray.map((show, showNumber) => {
@@ -105,7 +115,11 @@ function App() {
       </div>
         
       <Modal modalOpen={showModal} toggleModal={setShowModal}>
-        <Signin submitClicked={() => setShowModal(false)}/> 
+        <Signin submitClicked={() => setShowModal(false)} registerClicked={registerClicked}/> 
+      </Modal>
+
+      <Modal modalOpen={registerModalOpen} toggleModal={setRegisterModalOpen}>
+        <Register toggleSignin={setRegisterModalOpen} />
       </Modal>
 
       <SlideinModal slideinOpen={showSlidein} toggleSlidein={setShowSlidein} />
