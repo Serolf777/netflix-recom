@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { SignInValidationSchema } from './validationSchema.tsx';
-import { yupResolver } from '@hookform/resolvers/yup'
+import { yupResolver } from '@hookform/resolvers/yup';
 
 interface RegisterProps {
     toggleSignin: () => void;
@@ -13,7 +13,31 @@ const Register: FC<RegisterProps> = ({ toggleSignin }) => {
     });
     const { register, getValues, handleSubmit, formState: { errors } } = methods;
 
-    const onSubmitHandler = () => {
+    const onSubmitHandler = async () => {
+        const loginCredentials = {
+            userName: getValues("username"),
+            password: getValues("password")
+        }
+        
+        const json = JSON.stringify(loginCredentials);
+
+        try {
+            await fetch("http://localhost:8080/users", {
+                    method: "POST",
+                    body: json,
+                    headers: {
+                        "Content-Type": "application/json",
+                        Accept: "application/json"
+                    }
+                })
+                .then( response => response.json())
+                .then(data => console.log(data))
+                .catch(error => console.log(error));
+        }
+        catch(error) {
+            console.log(error)
+        }
+
         toggleSignin();
     };
 
@@ -25,7 +49,11 @@ const Register: FC<RegisterProps> = ({ toggleSignin }) => {
                         Register An Account
                     </div>
                     <div className="register-header">
-                        Please create a username and password.
+                        <div className="header-text">Please create a username and password. </div>
+                        <div className="requirements-text">
+                            Username must be at least 6 characters and Password must be minimum 6 characters, 
+                            contain an uppercase letter, and a number.
+                        </div>
                     </div>
                     <div className="register-details">
                         <div className="username">
@@ -46,10 +74,7 @@ const Register: FC<RegisterProps> = ({ toggleSignin }) => {
                                 </div>
                             }
                         </div>
-                        <div className="password-requirements">
-                            Password must be at least 5 characters and include an uppercase letter, lowercase letter, and a number.
-                        </div>
-                        <button type="submit" value="submit"> Submit </button>
+                        <button className="submit-button" type="submit" value="submit"> Create An Account </button>
                     </div>
                 </div>
             </form>

@@ -376,6 +376,7 @@ body.modal-open {
         .username, .password {
             margin-top: 20px;
             margin-bottom: 20px;
+            min-height: 70px;
         }
 
         .username-input, .password-input {
@@ -397,13 +398,27 @@ body.modal-open {
             }
         }
     }
+
+    .error-message {
+        font-size: 14px;
+        color: red;
+    }
 }
 
 .register-modal {
     .register-header {
         font-weight: bold;
-        font-size: 16px;
-        margin-bottom: 20px;
+        margin-bottom: 10px;
+
+        .header-text {
+            font-size: 14px;
+        }
+
+        .requirements-text {
+            font-weight: normal;
+            font-size: 12px;
+            font-style: italic;
+        }
     }
 
     .register-details {
@@ -412,9 +427,10 @@ body.modal-open {
         align-items: center;
         flex-direction: column;
 
-        .username, .passwords {
+        .username, .password {
             margin-top: 20px;
             margin-bottom: 20px;
+            min-height: 70px;
         }
 
         .password-requirements {
@@ -423,7 +439,7 @@ body.modal-open {
             margin-bottom: 10px;
         }
 
-        .username-input, .password-input {
+        .username-input, .password-input, .submit-button {
             margin-top: 10px;
         }
     }

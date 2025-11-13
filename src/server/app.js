@@ -2,6 +2,7 @@
 import { LMStudioClient, Chat } from "@lmstudio/sdk";
 import { NetflixShowData, ErrorData } from "../utilities/netflixShowData.js";
 import express from "express";
+import bodyParser from "body-parser";
 import cors from "cors";
 const app = express();
 
@@ -12,6 +13,8 @@ app.use(
         methods: ["GET", "POST"]
     })
 );
+
+app.use(bodyParser.json());
 
 app.get("/data/:genre", async (req, res) => {
     try {
@@ -57,6 +60,22 @@ app.get("/userSearch", async (req, res) => {
             return;
         }
 });
+
+const users = [];
+
+app.get('/users', (req, res) => {
+    res.json(users);
+})
+
+app.post('/users', (req, res) => {
+    try {
+        const user = { username: req.body.username, password: req.body.password };
+        users.push(user);
+        res.status(200).send({ status: "success" });
+    } catch (error) {
+        res.status(500).json({ error: error });
+    }
+})
 
 app.listen(8080, () => {
     console.log("Server is running on http://localhost:8080");
