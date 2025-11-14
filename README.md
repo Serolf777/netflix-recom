@@ -1,6 +1,8 @@
 # Neflix-recom
 
 Webpage that is connected to a local LLM to get dynamic results and leverages react for dynamically loading data on the webpage.
+Custom made components with the goal of reusability use for the frontend.
+
 Uses npm front end and node back end.
 
 The LLM leveraged comes from LM studio OpenAi's gpt-oss 20B and the server expects to be reachable at "http://127.0.0.1:1234".
