@@ -37,6 +37,20 @@ export const genresList = [
     "Sci-Fi"
 ];
 
+export const coolPokemonList = [
+    "Bulbasaur",
+    "Squirtle",
+    "Charmander",
+    "Pikachu"
+];
+
+export const rateTheSite = [
+    "Amazing!",
+    "Great!",
+    "Could be better...",
+    "Terrible! Awful!"
+];
+
 export interface NetflixShowData {
     ranking: number;
     name: string;

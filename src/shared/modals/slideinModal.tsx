@@ -1,15 +1,16 @@
-import "../styles/netflixRecom.scss";
-import {  useEffect, useRef, FC } from "react";
+import "./modals.scss";
+import {  useEffect, useRef, FC, ReactNode } from "react";
 import CloseIcon from '@mui/icons-material/Close'
 import classNames from "classnames";
-import { isMobile } from "./isMobile.tsx";
+import { isMobile } from "../isMobile.tsx";
 
 export interface SlideinModalProps {
     slideinOpen: boolean;
     toggleSlidein: (toggle: boolean) => void;
+    children: ReactNode;
 }
 
-const SlideinModal: FC<SlideinModalProps> = ({ slideinOpen, toggleSlidein }) => {
+const SlideinModal: FC<SlideinModalProps> = ({ slideinOpen, toggleSlidein, children }) => {
     const ref = useRef<HTMLDivElement | null>(null);
     const mobile = isMobile();
 
@@ -51,7 +52,8 @@ const SlideinModal: FC<SlideinModalProps> = ({ slideinOpen, toggleSlidein }) => 
                     <CloseIcon className="close-button" onClick={closeModal}/>
                 </div>
 
-                <div>Slidein Placeholder</div>
+                {children}
+                
             </div>
         </div>
     )

@@ -4,14 +4,15 @@ import NetflixShow from "./netflixShow.tsx";
 import { sampleData } from "./utilities/constants.tsx";
 import { LanguageModel, LanguageModelSearch } from "./LanguageModel.tsx";
 import Dropdown from "./shared/dropdown.tsx";
-import { genresList } from "./utilities/constants.tsx";
+import { genresList, coolPokemonList, rateTheSite } from "./utilities/constants.tsx";
 import Header from "./header/header.tsx";
 import classNames from "classnames";
-import Modal from './shared/modal.tsx'
+import Modal from './shared/modals/modal.tsx'
 import Signin from "./shared/signin.tsx";
-import SlideinModal from './shared/slideinModal.tsx'
+import SlideinModal from './shared/modals/slideinModal.tsx'
 import { isMobile } from "./shared/isMobile.tsx";
 import Register from "./shared/register.tsx";
+import GenreDropdown from "./shared/genreDropdown.tsx";
 
 function App() {
   const [ loading, setLoading] = useState(false);
@@ -25,6 +26,10 @@ function App() {
 
   function onChangeHandler() {
     console.log("Selected genre:", getValues("genres"));
+  }
+
+  function slideInOptionSelected(option) {
+    console.log(`option selected: ${option}`)
   }
 
   useEffect(() => {
@@ -96,7 +101,7 @@ function App() {
             </div>
 
             <div className="search-header">Would you like to narrow down by genre?</div>
-            <Dropdown genres={genresList} onChangeHandler={onChangeHandler} register={() => register("genres")} />
+            <GenreDropdown genres={genresList} onChangeHandler={onChangeHandler} register={() => register("genres")} />
             <div className="search-header"> 
               <div className="searchby">Or search by your own keywords: </div>
             </div>
@@ -122,7 +127,22 @@ function App() {
         <Register toggleSignin={setRegisterModalOpen} />
       </Modal>
 
-      <SlideinModal slideinOpen={showSlidein} toggleSlidein={setShowSlidein} />
+      <SlideinModal slideinOpen={showSlidein} toggleSlidein={setShowSlidein}>
+        <div>
+          <div>Look at this slide in!</div>
+          <Dropdown dropdownOptions={genresList} onChangeHandler={slideInOptionSelected}/>
+          <Dropdown 
+            customPrompt="What's your favorite pokemon?" 
+            dropdownOptions={coolPokemonList} 
+            onChangeHandler={slideInOptionSelected}
+          />
+          <Dropdown
+            customPrompt="What would you rate this site?"
+            dropdownOptions={rateTheSite} 
+            onChangeHandler={slideInOptionSelected}
+          />
+        </div>
+      </SlideinModal>
     </div>
   );
 }

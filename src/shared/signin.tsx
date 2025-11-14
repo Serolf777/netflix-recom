@@ -2,6 +2,7 @@ import { FC } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { SignInValidationSchema } from './validationSchema.tsx';
 import { yupResolver } from '@hookform/resolvers/yup';
+import "./shared.scss";
 
 interface SigninProps {
     submitClicked: () => void;

@@ -1,0 +1,110 @@
+.modal {
+    position: fixed;
+    height: 400px;
+    width: 400px;
+    border: 2px solid black;
+    background: #F0F8FF;
+    color: black;
+
+    &.mobile {
+        width: 100%;
+    }
+
+    .main-modal {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        height: 400px;
+        width: 400px;;
+        z-index: 1000;
+        opacity: 1;
+        background: white;
+
+        &.mobile {
+            width: 100%;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: end;
+
+            .close-button {
+                height: 20px;
+                width: 20px;
+                margin-top: 5px;
+                margin-right: 5px;
+            
+                &:hover {
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+
+    .background {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        background: #333 0 0 no-repeat padding-box;
+        opacity: .5;
+        z-index: 999;
+    }
+}
+
+.slidein {
+    z-index: 1000;
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+
+    .slidein-content {
+        top: 0;
+        right: 0;
+        position: absolute;
+        height: 100%;
+        width: 400px;
+        border: 2px solid black;
+        background: #F0F8FF;
+        color: black;
+        animation: slidein-content 0.5s forwards;
+    }
+
+    &.mobile {
+        .slidein-content {
+            width: 100%;
+        }
+    }
+    
+    @keyframes slidein-content {
+        from {
+            transform: translateX(100%);
+            opacity: 0;
+        }
+        to {
+            transform: translateX(0);
+            opacity: 1;
+        }
+    }
+    
+
+    .modal-header {
+            display: flex;
+            justify-content: end;
+
+        .close-button {
+            height: 20px;
+            width: 20px;
+            margin-top: 5px;
+            margin-right: 5px;
+        
+            &:hover {
+                cursor: pointer;
+            }
+        }
+    }
+}
