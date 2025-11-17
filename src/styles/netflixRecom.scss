@@ -10,7 +10,7 @@ body.modal-open {
 
 
 .App {
-    font-style: "PT Sans Narrow";
+    font-family: "Ubuntu", sans-serif;
     position: relative;
     height: 100%;
     margin-top: 20px;
@@ -64,7 +64,7 @@ body.modal-open {
         }
 
         .site-header-text {
-            font-size: 24px;
+            font-size: 28px;
             margin-left: auto;
             margin-right: auto;
             margin-top: 6px;
@@ -103,11 +103,105 @@ body.modal-open {
         margin-top: 60px;
         padding-bottom: 12px;
 
+        .announcement {
+            font-size: 20px;
+            margin-top: 40px;
+
+            &.mobile {
+                margin-top: 72px; 
+            }
+        }
+
         .stockdata-note {
             margin-bottom: 4px;
             font-size: 14px;
             color: black;
             font-weight: bold;
+            font-style: italic;
+        }
+
+        .netflix-shows-container {
+
+            &:before {
+                content: "";
+                display: block;
+                width: 70%;
+                margin: 1em auto 0;
+                border-top: 1px solid black;
+            }
+
+            &:after {
+                content: "";
+                display: block;
+                width: 70%;
+                margin: 1em auto 0;
+                border-bottom: 1px solid black;
+            }
+            
+            .netflixShow {
+                color: black;
+                margin-bottom: 5px;
+                display: flex;
+                margin-left: 20%;
+                margin-right: 20%;
+                margin-top: 4px;
+                margin-bottom: 4px;
+
+                .show-image-container {
+                    flex: 1;
+                }
+
+                .show-details {
+                    flex: 1;
+                    text-align: left;
+
+                    .show-name {
+                        font-weight: bold;
+                        font-size: 20px;
+                        margin-bottom: 10px;
+                    }
+
+                    .show-description, .show-genre, .show-rating, .show-link {
+                        margin-bottom: 5px;
+                    }
+
+                }
+                .show-image {
+                    float: right;
+                    margin-right: 30px;
+                    max-height: 250px;
+                    max-width: 250px;
+                    height: auto;
+                    width: auto;
+                }
+            }
+        }
+
+        .netflix-form {
+            align-items: center;
+            margin-left: 20%;
+            margin-right: 20%;
+
+            .ai-search-section {
+                display: flex;
+
+                .search-header {
+                    flex: 3;
+                    text-align: right;
+                    margin-right: 16px;
+                }
+
+                .button-container {
+                    flex: 2;
+                    display: flex;
+                    align-items: flex-end;
+                    margin-bottom: 8px;
+                }
+            }
+
+            .searchbar {
+                margin-right: 10px;
+            }
         }
     }
 }
@@ -130,75 +224,24 @@ body.modal-open {
     }
 }
 
-.announcement {
-    margin-top: 40px;
-
-    &.mobile {
-        margin-top: 72px; 
-    }
-}
-
-.netflixShow {
-    color: black;
-    margin-bottom: 5px;
+.footer {
     display: flex;
-    margin-left: 20%;
-    margin-right: 20%;
+    flex-grow: 1;
+    align-items: flex-end;
+    height: 32px;
+    border: 2px solid black;
+    background-color: #C22727;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
 
-    .show-image-container {
-        flex: 1;
-    }
-
-    .show-details {
-        flex: 1;
-        text-align: left;
-
-        .show-name {
-            font-weight: bold;
-            font-size: 20px;
-            margin-bottom: 10px;
-        }
-
-        .show-description, .show-genre, .show-rating, .show-link {
-            margin-bottom: 5px;
-        }
-
-    }
-    .show-image {
-        float: right;
-        margin-right: 30px;
-        max-height: 250px;
-        max-width: 250px;
-        height: auto;
-        width: auto;
-    }
-}
-
-.netflix-form {
-    align-items: center;
-    margin-left: 20%;
-    margin-right: 20%;
-
-    .ai-search-section {
-        display: flex;
-
-        .search-header {
-            flex: 3;
-            text-align: right;
-            margin-right: 16px;
-        }
-
-        .button-container {
-            flex: 2;
-            display: flex;
-            align-items: flex-end;
-            margin-bottom: 8px;
-        }
-    }
-
-    .searchbar {
-        margin-right: 10px;
-    }
+    .footer-text {
+        width: 100%;
+        padding-top: 6px;
+        padding-bottom: 6px;
+        font-size: 16px;
+        font-weight: bold;
+        color: #F0F8FF;
+    }   
 }
 
 .lds-dual-ring {
@@ -231,24 +274,4 @@ body.modal-open {
   100% {
     transform: rotate(360deg);
   }
-}
-
-.footer {
-    display: flex;
-    flex-grow: 1;
-    align-items: flex-end;
-    height: 32px;
-    border: 2px solid black;
-    background-color: #C22727;
-    border-top-left-radius: 12px;
-    border-top-right-radius: 12px;
-
-    .footer-text {
-        width: 100%;
-        padding-top: 6px;
-        padding-bottom: 6px;
-        font-size: 16px;
-        font-weight: bold;
-        color: #F0F8FF;
-    }   
 }

@@ -88,17 +88,22 @@ function App() {
         </div>
       }
 
-      {loading ?
-          <div className="lds-dual-ring"/>
-          : errorMessage !== "" ? (
-              <div className="error-message">{errorMessage}</div>
-            ) : (
-              showsArray.map((show, showNumber) => {
-                  return <NetflixShow key={showNumber} showData={show} showNumber={showNumber}/>
-                }
-              )
-          )
-        }
+      <div className="netflix-shows-container">
+        {loading ?
+            <div className="lds-dual-ring"/>
+            : errorMessage !== "" ? (
+                <div className="error-message">{errorMessage}</div>
+              ) : (
+                showsArray.map((show, showNumber) => {
+                    return <NetflixShow key={showNumber} showData={show} showNumber={showNumber}/>
+                  }
+                )
+            )
+          }
+        </div>
+        
+        <div className="divider"></div>
+
         <FormProvider {...{ register, getValues }}>
           <form name="test-form" className="netflix-form" onSubmit={(e) => e.preventDefault()}>
             <div className="ai-search-section">
