@@ -10,7 +10,7 @@ export const NetflixShow: FC<NetflixShowProps> = ({ showData }) => {
     return (
         <div className="netflixShow">
             <div className="show-image-container">
-                <img className="show-image" src={showData.picture} alt={showData.name} height="200" width="200"/>
+                <img className="show-image" src={showData.picture} alt={showData.name} />
             </div>
             <div className="show-details">
                 <div className="show-name">{showData.name}.</div>

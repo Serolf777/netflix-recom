@@ -10,6 +10,7 @@ body.modal-open {
 
 
 .App {
+    font-style: "PT Sans Narrow";
     position: relative;
     height: 100%;
     margin-top: 20px;
@@ -101,6 +102,13 @@ body.modal-open {
     .site-body {
         margin-top: 60px;
         padding-bottom: 12px;
+
+        .stockdata-note {
+            margin-bottom: 4px;
+            font-size: 14px;
+            color: black;
+            font-weight: bold;
+        }
     }
 }
 
@@ -159,6 +167,10 @@ body.modal-open {
     .show-image {
         float: right;
         margin-right: 30px;
+        max-height: 250px;
+        max-width: 250px;
+        height: auto;
+        width: auto;
     }
 }
 

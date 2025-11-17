@@ -22,6 +22,7 @@ function App() {
   const [showModal, setShowModal] = useState(false);
   const [showSlidein, setShowSlidein] = useState(false);
   const [registerModalOpen, setRegisterModalOpen] = useState(false);
+  const [isStockData, setIsStockData] = useState(true);
   const mobile = isMobile();
 
   function onChangeHandler() {
@@ -36,9 +37,14 @@ function App() {
     setShowsArray(sampleData);
   }, [sampleData]);
 
-  async function searchByGenre() {
+  function loadingData() {
     setErrorMessage("");
     setLoading(true);
+    setIsStockData(false);
+  }
+
+  async function searchByGenre() {
+    loadingData();
     const result = await LanguageModel(getValues("genres"), setLoading);
     
     if (result?.error) {
@@ -49,8 +55,7 @@ function App() {
   }
 
   async function searchByUserInput() {
-    setErrorMessage("");
-    setLoading(true);
+    loadingData();
     const result = await LanguageModelSearch(getValues("searchbar"), setLoading);
 
     if (result?.error) {
@@ -77,6 +82,11 @@ function App() {
       })}>
         These are the top shows on netflix RIGHT NOW!
       </h3>
+      {isStockData && 
+        <div className="stockdata-note">
+          *This is stock data, please search by keyword or genre to get real data.
+        </div>
+      }
 
       {loading ?
           <div className="lds-dual-ring"/>
