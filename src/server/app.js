@@ -4,12 +4,13 @@ import { NetflixShowData, ErrorData } from "../utilities/netflixShowData.js";
 import express from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
+import db from './db.cjs';
 const app = express();
 
 //Enable CORS for the client origin
 app.use(
     cors({
-        origin: ["http://localhost:3080", "https://127.0.0.1:1234"],
+        origin: ["http://localhost:3080", "https://127.0.0.1:1234", "https://localhost:1433"],
         methods: ["GET", "POST"]
     })
 );
@@ -61,20 +62,34 @@ app.get("/userSearch", async (req, res) => {
         }
 });
 
-const users = [];
-
-app.get('/users', (req, res) => {
-    res.json(users);
-})
-
 app.post('/users', (req, res) => {
-    try {
-        const user = { username: req.body.username, password: req.body.password };
-        users.push(user);
-        res.status(200).send({ status: "success" });
-    } catch (error) {
-        res.status(500).json({ error: error });
+    async function query() {
+        try {
+            let pool = await db.connect();
+            pool.request().query(
+                `IF NOT EXISTS (select * FROM [USER_DATABASE].[dbo].[USERS] WHERE Username = '${req.body.userName}')
+                begin
+                    INSERT INTO [USER_DATABASE].[dbo].[USERS] (Username, Password) 
+                    VALUES ('${req.body.userName}', '${req.body.password}!')
+                end`, 
+                (err, dataset) => {
+                if (err) {
+                    console.log(err);
+                    res.send(err);
+                }
+                if (dataset.rowsAffected > 0) {
+                    res.json({ status: "user added" });
+                } 
+                else {
+                    res.json({ status: "user already exists" });
+                }
+            });
+        }
+        catch (error) {
+            console.log(error)
+        }
     }
+    query();
 })
 
 app.listen(8080, () => {
