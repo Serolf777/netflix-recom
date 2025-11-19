@@ -70,7 +70,7 @@ app.post('/users', (req, res) => {
                 `IF NOT EXISTS (select * FROM [USER_DATABASE].[dbo].[USERS] WHERE Username = '${req.body.userName}')
                 begin
                     INSERT INTO [USER_DATABASE].[dbo].[USERS] (Username, Password) 
-                    VALUES ('${req.body.userName}', '${req.body.password}!')
+                    VALUES ('${req.body.userName}', '${req.body.password}')
                 end`, 
                 (err, dataset) => {
                 if (err) {
