@@ -78,10 +78,10 @@ app.post('/users', (req, res) => {
                     res.send(err);
                 }
                 if (dataset.rowsAffected > 0) {
-                    res.json({ status: "user added" });
+                    res.json({ status: "user added", code: 200 });
                 } 
                 else {
-                    res.json({ status: "user already exists" });
+                    res.json({ status: "user already exists", code: 400 });
                 }
             });
         }

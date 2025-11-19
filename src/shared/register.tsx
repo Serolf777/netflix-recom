@@ -15,7 +15,7 @@ const Register: FC<RegisterProps> = ({ toggleSignin }) => {
     const { register, getValues, handleSubmit, formState: { errors } } = methods;
 
     const onSubmitHandler = async () => {
-        let addUser = false;
+        let userAdded = false;
 
         const loginCredentials = {
             userName: getValues("username"),
@@ -34,35 +34,21 @@ const Register: FC<RegisterProps> = ({ toggleSignin }) => {
                     }
                 })
                 .then(response => response.json())
-                .then(data => console.log(data))
-                .catch(error => console.log(error));
-        }
-        catch(error) {
-            console.log(error)
-        }
-
-
-
-        /*
-        try {
-            await fetch("http://localhost:8080/users", {
-                    method: "POST",
-                    body: json,
-                    headers: {
-                        "Content-Type": "application/json",
-                        Accept: "application/json"
+                .then(data => {
+                    if (data.code == 200) {
+                        userAdded = true;
                     }
+                    console.log(data);
                 })
-                .then( response => response.json())
-                .then(data => console.log(data))
                 .catch(error => console.log(error));
         }
         catch(error) {
             console.log(error)
         }
-        */
-
-        toggleSignin();
+        
+        if (userAdded) {
+            toggleSignin();
+        }
     };
 
     return (
