@@ -62,6 +62,35 @@ app.get("/userSearch", async (req, res) => {
         }
 });
 
+app.post('/signin', (req, res) => {
+    async function query() {
+        try {
+            let pool = await db.connect();
+            pool.request().query(`SELECT * FROM [USER_DATABASE].[dbo].[USERS] WHERE Username = '${req.body.userName}'
+                AND Password = '${req.body.password}'`,
+                (err, dataset) => {
+                    if (err) {
+                        console.log(err);
+                        res.send(err);
+                    }
+
+                    if (dataset.rowsAffected > 0) {
+                        res.json({ status: "login credentials match!", code: 200 });
+                    } 
+                    else {
+                        res.json({ status: "no match for login credentials", code: 500 });
+                    }
+                }
+            )
+        }
+        catch(error) {
+            console.log(error);
+            res.send(error);
+        }
+    }
+    query();
+})
+
 app.post('/users', (req, res) => {
     async function query() {
         try {
@@ -81,12 +110,13 @@ app.post('/users', (req, res) => {
                     res.json({ status: "user added", code: 200 });
                 } 
                 else {
-                    res.json({ status: "user already exists", code: 400 });
+                    res.json({ status: "user already exists", code: 500 });
                 }
             });
         }
         catch (error) {
-            console.log(error)
+            console.log(error);
+            res.send(error);
         }
     }
     query();

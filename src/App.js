@@ -70,6 +70,12 @@ function App() {
     setRegisterModalOpen(true);
   }
 
+  async function signinClicked () {
+    
+
+    setShowModal(false);
+  }
+
   return (
     <div className={classNames("App", {
       ["modal-open"] : showModal
@@ -135,7 +141,7 @@ function App() {
       </div>
         
       <Modal modalOpen={showModal} toggleModal={setShowModal}>
-        <Signin submitClicked={() => setShowModal(false)} registerClicked={registerClicked}/> 
+        <Signin submitClicked={signinClicked} registerClicked={registerClicked}/> 
       </Modal>
 
       <Modal modalOpen={registerModalOpen} toggleModal={setRegisterModalOpen}>

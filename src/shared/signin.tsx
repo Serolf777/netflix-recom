@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { SignInValidationSchema } from './validationSchema.tsx';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -13,13 +13,54 @@ const Signin: FC<SigninProps> = ({ submitClicked, registerClicked }) => {
     const methods = useForm({
             resolver: yupResolver(SignInValidationSchema)
         });
-    const { handleSubmit, formState: { errors }, register } = methods;
+    const { handleSubmit, getValues, formState: { errors }, register } = methods;
+    const [loginError, setLoginError] = useState(false);
+
+    async function submitClickedAction () {
+        const loginCredentials = {
+            userName: getValues("username"),
+            password: getValues("password")
+        }
+        const json = JSON.stringify(loginCredentials);
+
+        try {
+            await fetch("http://localhost:8080/signin", {
+                    method: "POST",
+                    body: json,
+                    headers: {
+                        "Content-Type": "application/json",
+                        Accept: "application/json"
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.code == 200) {
+                        setLoginError(false);
+                        submitClicked();
+                    } 
+                    else {
+                        setLoginError(true);
+                    }
+                    console.log(data);
+                })
+                .catch(error => console.log(error));
+        }
+        catch(error) {
+            console.log(error)
+        }
+  }
 
     return (
         <FormProvider {...methods} >
-            <form name="register-form" className="register-form" onSubmit={handleSubmit(submitClicked)}>
+            <form name="register-form" className="register-form" onSubmit={handleSubmit(submitClickedAction)}>
                 <div className="signin">
                     <div className="signin-header">Sign-in</div>
+                    {loginError &&
+                        <div className="error-message">
+                            Unable to login, please double check username and password.
+                        </div>
+                    }
+
                     <div className="signin-details">
                         <div className="username">
                             <div>Username</div>

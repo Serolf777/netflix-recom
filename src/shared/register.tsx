@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { SignInValidationSchema } from './validationSchema.tsx';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -9,6 +9,8 @@ interface RegisterProps {
 }
 
 const Register: FC<RegisterProps> = ({ toggleSignin }) => {
+    const [error, setError] = useState(false);
+    const [userExists, setUserExists] = useState(false);
     const methods = useForm({
         resolver: yupResolver(SignInValidationSchema)
     });
@@ -37,6 +39,8 @@ const Register: FC<RegisterProps> = ({ toggleSignin }) => {
                 .then(data => {
                     if (data.code == 200) {
                         userAdded = true;
+                    } else if (data.code == 500) {
+                        setUserExists(true);
                     }
                     console.log(data);
                 })
@@ -47,7 +51,11 @@ const Register: FC<RegisterProps> = ({ toggleSignin }) => {
         }
         
         if (userAdded) {
+            setError(false);
+            setUserExists(false);
             toggleSignin();
+        } else {
+            setError(true);
         }
     };
 
@@ -59,7 +67,19 @@ const Register: FC<RegisterProps> = ({ toggleSignin }) => {
                         Register An Account
                     </div>
                     <div className="register-header">
-                        <div className="header-text">Please create a username and password. </div>
+                        {error && !userExists ?
+                            <div className="error">
+                                There was an error during account creation, please try again.
+                            </div> : 
+                            userExists ?
+                            <div className="error">
+                                This user already exists, please choose a different username.
+                            </div> 
+                            :
+                            <div className="header-text">
+                                Please create a username and password.
+                            </div>
+                        }
                         <div className="requirements-text">
                             Username must be at least 6 characters and Password must be minimum 6 characters, 
                             contain an uppercase letter, and a number.
