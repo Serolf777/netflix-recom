@@ -2,6 +2,7 @@ import { FC, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { SignInValidationSchema } from './validationSchema.tsx';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { expireTime } from '../utilities/utilityFunctions.tsx';
 import "./shared.scss";
 
 interface SigninProps {
@@ -36,6 +37,7 @@ const Signin: FC<SigninProps> = ({ submitClicked, registerClicked }) => {
                 .then(data => {
                     if (data.code == 200) {
                         setLoginError(false);
+                        document.cookie = `username=${getValues("username")}; expires ${expireTime()}; path=/;`
                         submitClicked();
                     } 
                     else {

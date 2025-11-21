@@ -4,6 +4,7 @@ import companyLogo from "../resources/companyLogo.png";
 import { useState, FC } from "react";
 import HeaderDropdown from "./headerDropdown.tsx";
 import { isMobile } from "../shared/isMobile.tsx";
+import { getCookies } from "../utilities/utilityFunctions.tsx";
 import classNames from "classnames";
 
 export interface HeaderProps {
@@ -19,6 +20,8 @@ const Header: FC<HeaderProps> = ({ toggleModal, toggleSlidein }) => {
     function signIn() {
         toggleModal(true);
     }
+
+    const cookies = getCookies();
 
     return (
         <div className="header-section">
@@ -49,9 +52,15 @@ const Header: FC<HeaderProps> = ({ toggleModal, toggleSlidein }) => {
 
             <span className="divider" />
             
-            <div className="sign-in-button" onClick={signIn}>
+            {cookies["username"] ?
+                <div className="welcome">
+                    Welcome, {cookies["username"]}
+                </div>
+            :
+                <div className="sign-in-button" onClick={signIn}>
                     Sign in!
             </div>
+            }
         </div>
     )
 };

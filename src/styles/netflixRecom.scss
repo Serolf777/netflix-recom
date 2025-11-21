@@ -58,7 +58,7 @@ body.modal-open {
             opacity: .5;
         }
 
-        .site-header-logo, .site-header-text, .sign-in-button, .slidein-button {
+        .site-header-logo, .site-header-text, .sign-in-button, .slidein-button, .welcome {
             font-weight: bold;
             color: #F0F8FF;
         }
@@ -88,7 +88,7 @@ body.modal-open {
             border-bottom-right-radius: 12px;
         }
 
-        .sign-in-button, .slidein-button {
+        .welcome, .sign-in-button, .slidein-button {
             margin-left: 0;
             padding-left: 10px;
             padding-right: 10px;
