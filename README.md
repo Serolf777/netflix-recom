@@ -1,7 +1,10 @@
 # Neflix-recom
 
 Webpage that is connected to a local LLM to get dynamic results and leverages react for dynamically loading data on the webpage.
+
 Custom made components with the goal of reusability use for the frontend.
+
+Working login/registration that saves credentials to SQL server; after logging in cookies user with expiration of 24 hours.
 
 Uses npm front end and node back end.
 
