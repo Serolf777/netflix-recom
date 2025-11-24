@@ -5,6 +5,7 @@ import { useState, FC } from "react";
 import HeaderDropdown from "./headerDropdown.tsx";
 import { isMobile } from "../shared/isMobile.tsx";
 import { getCookies } from "../utilities/utilityFunctions.tsx";
+import { useNavigate } from 'react-router';
 import classNames from "classnames";
 
 export interface HeaderProps {
@@ -15,7 +16,9 @@ export interface HeaderProps {
 
 const Header: FC<HeaderProps> = ({ toggleModal, toggleSlidein }) => {
     const [dropdownOpen, setDropdownOpen] = useState(false);
+    const [signInDropdownOpen, setSignInDropdownOpen] = useState(false);
     const mobile = isMobile();
+    const navigate =  useNavigate();
 
     function signIn() {
         toggleModal(true);
@@ -33,7 +36,11 @@ const Header: FC<HeaderProps> = ({ toggleModal, toggleSlidein }) => {
                     Click me to know more!
                 </div>
                 {dropdownOpen && 
-                    <HeaderDropdown />
+                    <HeaderDropdown>
+                        <div>This will tell you some important information!</div>
+                        <div>At least it will in the future.</div>
+                        <div>But for now it's stock data.</div>
+                    </HeaderDropdown>
                 }
             </div>
 
@@ -53,8 +60,19 @@ const Header: FC<HeaderProps> = ({ toggleModal, toggleSlidein }) => {
             <span className="divider" />
             
             {cookies["username"] ?
-                <div className="welcome">
-                    Welcome, {cookies["username"]}
+                <div>
+                    <div className="welcome-parent">
+                        <div className="welcome-text" onClick={() => setSignInDropdownOpen(!signInDropdownOpen)}> 
+                            Welcome, {cookies["username"]} 
+                        </div>
+                        {signInDropdownOpen && 
+                            <HeaderDropdown>
+                                <div className="account-page-link" onClick={() => navigate("/account-page")}>
+                                    Account Page
+                                </div>
+                            </HeaderDropdown>
+                        }
+                    </div>
                 </div>
             :
                 <div className="sign-in-button" onClick={signIn}>

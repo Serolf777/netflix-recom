@@ -18,6 +18,28 @@ body.modal-open {
     color: #C22727;
     background: #F5EDED;
 
+    .account-page {
+        height: 100%;
+        min-height: 500px;
+        position: relative;
+
+        .header {
+            display: flex;
+            .go-back {
+                margin-left: 12px;
+                display: inline-block;
+
+                &:hover {
+                    cursor: pointer;
+                }
+            }
+        }
+
+        .account-content {
+            min-height: 500px;
+        }
+    }
+
     .header-section {
         position: fixed;
         left: 0;
@@ -30,6 +52,17 @@ body.modal-open {
         background-color: #C22727;
         border-bottom-left-radius: 12px;
         border-bottom-right-radius: 12px;
+
+        .header-dropdown {
+                color: black;
+                position: absolute;
+                background: #C22727;
+                border-left: 2px solid black;
+                border-right: 2px solid black;
+                border-bottom: 2px solid black;
+                border-bottom-left-radius: 12px;
+                border-bottom-right-radius: 12px;
+        }
 
         .site-header-logo {
             margin-right: 0;
@@ -47,6 +80,26 @@ body.modal-open {
                 cursor: pointer;
                 text-decoration: underline;
             }
+
+            .header-dropdown {
+                top: 100%;
+                left: 20px;
+            }
+        }
+
+        .welcome-parent {
+            position: relative;
+
+            .welcome-text, .account-page-link {
+                &:hover {
+                    cursor: pointer;
+                }
+            }
+
+            .header-dropdown {
+                top: 34px;
+                right: 5px;
+            }
         }
 
         .divider {
@@ -58,7 +111,7 @@ body.modal-open {
             opacity: .5;
         }
 
-        .site-header-logo, .site-header-text, .sign-in-button, .slidein-button, .welcome {
+        .site-header-logo, .site-header-text, .sign-in-button, .slidein-button, .welcome-parent {
             font-weight: bold;
             color: #F0F8FF;
         }
@@ -75,24 +128,13 @@ body.modal-open {
             }
         }
 
-        .header-dropdown {
-            color: black;
-            position: absolute;
-            top: 100%;
-            left: 20px;
-            background: #C22727;
-            border-left: 2px solid black;
-            border-right: 2px solid black;
-            border-bottom: 2px solid black;
-            border-bottom-left-radius: 12px;
-            border-bottom-right-radius: 12px;
-        }
-
-        .welcome, .sign-in-button, .slidein-button {
+        .welcome-parent, .sign-in-button, .slidein-button {
             margin-left: 0;
             padding-left: 10px;
             padding-right: 10px;
+        }
 
+        .sign-in-button, .slidein-button {
             &:hover {
                 cursor: pointer; 
             }
