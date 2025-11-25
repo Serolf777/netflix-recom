@@ -1,4 +1,4 @@
-import "../styles/netflixRecom.scss";
+import "./header.scss";
 import { ReactNode, FC } from "react";
 
 interface HeaderDropdownProps {

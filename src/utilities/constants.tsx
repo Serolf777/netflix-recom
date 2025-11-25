@@ -37,6 +37,14 @@ export const genresList = [
     "Sci-Fi"
 ];
 
+export const numberOfResults = [
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+];
+
 export const coolPokemonList = [
     "Bulbasaur",
     "Squirtle",

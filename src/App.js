@@ -1,6 +1,6 @@
 import { Routes, Route } from "react-router";
-import MainPage from "./MainPage.js";
-import AccountPage from "./accountPage.tsx";
+import MainPage from "./main-page/MainPage.js";
+import AccountPage from "./account-page/accountPage.tsx";
 import "./styles/netflixRecom.scss";
 
 export default function App() {

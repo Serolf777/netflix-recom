@@ -1,19 +1,19 @@
 import { useEffect, useState } from "react";
 import { FormProvider, useForm } from 'react-hook-form';
-import NetflixShow from "./netflixShow.tsx";
-import { sampleData } from "./utilities/constants.tsx";
-import { LanguageModel, LanguageModelSearch } from "./LanguageModel.tsx";
-import Dropdown from "./shared/dropdown.tsx";
-import { genresList, coolPokemonList, rateTheSite } from "./utilities/constants.tsx";
-import Header from "./header/header.tsx";
+import NetflixShow from "../netflixShow.tsx";
+import { sampleData } from "../utilities/constants.tsx";
+import { LanguageModel, LanguageModelSearch } from "../LanguageModel.tsx";
+import Dropdown from "../shared/dropdown.tsx";
+import { genresList, coolPokemonList, rateTheSite } from "../utilities/constants.tsx";
+import Header from "../shared/header/header.tsx";
 import classNames from "classnames";
-import Modal from './shared/modals/modal.tsx'
-import Signin from "./shared/signin.tsx";
-import SlideinModal from './shared/modals/slideinModal.tsx'
-import { isMobile } from "./shared/isMobile.tsx";
-import Register from "./shared/register.tsx";
-import GenreDropdown from "./shared/genreDropdown.tsx";
-import Footer from "./footer/footer.tsx";
+import Modal from '../shared/modals/modal.tsx'
+import Signin from "../shared/signin.tsx";
+import SlideinModal from '../shared/modals/slideinModal.tsx'
+import { isMobile } from "../shared/isMobile.tsx";
+import Register from "../shared/register.tsx";
+import GenreDropdown from "../shared/genreDropdown.tsx";
+import Footer from "../shared/footer/footer.tsx";
 
 function MainPage() {
   const [ loading, setLoading] = useState(false);

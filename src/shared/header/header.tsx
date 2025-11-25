@@ -1,10 +1,10 @@
-import "../styles/netflixRecom.scss";
+import "./header.scss";
 // @ts-ignore
 import companyLogo from "../resources/companyLogo.png";
 import { useState, FC } from "react";
 import HeaderDropdown from "./headerDropdown.tsx";
-import { isMobile } from "../shared/isMobile.tsx";
-import { getCookies } from "../utilities/utilityFunctions.tsx";
+import { isMobile } from "../isMobile.tsx";
+import { getCookies } from "../../utilities/utilityFunctions.tsx";
 import { useNavigate } from 'react-router';
 import classNames from "classnames";
 

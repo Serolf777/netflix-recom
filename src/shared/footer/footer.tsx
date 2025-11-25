@@ -1,4 +1,4 @@
-import '../styles/netflixRecom.scss';
+import './footer.scss';
 
 export default function Footer() {
     return (
