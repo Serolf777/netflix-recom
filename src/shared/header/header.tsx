@@ -19,12 +19,15 @@ const Header: FC<HeaderProps> = ({ toggleModal, toggleSlidein }) => {
     const [signInDropdownOpen, setSignInDropdownOpen] = useState(false);
     const mobile = isMobile();
     const navigate =  useNavigate();
+    const cookies = getCookies();
 
     function signIn() {
         toggleModal(true);
     }
 
-    const cookies = getCookies();
+    function signOut() {
+        console.log('signing out...')
+    }
 
     return (
         <div className="header-section">
@@ -69,6 +72,9 @@ const Header: FC<HeaderProps> = ({ toggleModal, toggleSlidein }) => {
                             <HeaderDropdown>
                                 <div className="account-page-link" onClick={() => navigate("/account-page")}>
                                     Account Page
+                                </div>
+                                <div className="signout-link" onClick={signOut}>
+                                    Sign out?
                                 </div>
                             </HeaderDropdown>
                         }

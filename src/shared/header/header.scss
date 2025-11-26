@@ -8,8 +8,7 @@
         justify-content: center;
         border: 2px solid black;
         background-color: #C22727;
-        border-bottom-left-radius: 12px;
-        border-bottom-right-radius: 12px;
+        border-radius: 0 0 12px 12px;
 
         .header-dropdown {
                 color: black;
@@ -18,8 +17,7 @@
                 border-left: 2px solid black;
                 border-right: 2px solid black;
                 border-bottom: 2px solid black;
-                border-bottom-left-radius: 12px;
-                border-bottom-right-radius: 12px;
+                border-radius: 0 0 12px 12px;
         }
 
         .site-header-logo {
@@ -49,16 +47,26 @@
             position: relative;
 
             .account-page-link {
-                margin-left: 5px;
-                margin-right: 5px;
-                margin-bottom: 5px;
+                margin: 0 5px 5px 5px;
+
+                &:after {
+                    content: "";
+                    display: block;
+                    width: 90%;
+                    margin: 6px auto 0;
+                    border-bottom: 1px solid black;
+                }
             }
 
-            .welcome-text, .account-page-link {
+            .welcome-text, .account-page-link, .signout-link {
                 &:hover {
                     cursor: pointer;
                     text-decoration: underline;
                 }
+            }
+
+            .signout-link {
+                margin-bottom: 4px;
             }
 
             .header-dropdown {
@@ -83,10 +91,7 @@
 
         .site-header-text {
             font-size: 28px;
-            margin-left: auto;
-            margin-right: auto;
-            margin-top: 6px;
-            margin-bottom: 6px;
+            margin: 6px auto 6px auto;
 
             &.mobile {
                 font-size: 16px;
@@ -95,13 +100,13 @@
 
         .welcome-parent, .sign-in-button, .slidein-button {
             margin-left: 0;
-            padding-left: 10px;
-            padding-right: 10px;
+            padding: 0 10px 0 10px;
         }
 
         .sign-in-button, .slidein-button {
             &:hover {
-                cursor: pointer; 
+                cursor: pointer;
+                text-decoration: underline;
             }
         }
     }

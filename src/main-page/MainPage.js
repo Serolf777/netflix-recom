@@ -107,7 +107,7 @@ function MainPage() {
           }
         </div>
         
-        <div className="divider"></div>
+        <div className="divider" />
 
         <FormProvider {...{ register, getValues }}>
           <form name="test-form" className="netflix-form" onSubmit={(e) => e.preventDefault()}>

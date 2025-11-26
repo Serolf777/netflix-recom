@@ -122,6 +122,45 @@ app.post('/users', (req, res) => {
     query();
 })
 
+app.post('/account-settings', (req, res) => {
+    async function query() {
+        try {
+            let pool = await db.connect();
+            pool.request().query(
+                `IF NOT EXISTS (select * FROM [USER_DATABASE].[dbo].[USER_SETTINGS] WHERE Username = '${req.body.Username}')
+                begin
+                    INSERT INTO [USER_DATABASE].[dbo].[USER_SETTINGS] (NumberOfResults, DefaultGenre, UserName) 
+                    VALUES (${req.body.NumOfResults}, '${req.body.DefaultGenre}', '${req.body.Username}')
+                end
+                ELSE
+                    begin
+                        UPDATE [USER_DATABASE].[dbo].[USER_SETTINGS]
+                        SET NumberOfResults = ${req.body.NumOfResults}, DefaultGenre = '${req.body.DefaultGenre}', Username = '${req.body.Username}'
+                        WHERE Username = '${req.body.Username}';
+                    end`, 
+                (err, dataset) => {
+                if (err) {
+                    console.log(err);
+                    res.send(err);
+                }
+                if (dataset.rowsAffected > 0) {
+                    res.json({ status: "account settings updated", code: 200})
+                }
+                else {
+                    res.json({ status: "unable to update account settings", code: 500 });
+                }
+            })
+
+        }
+        catch(err) {
+            console.log(err);
+            res.send(err);
+        }
+    }
+
+    query();
+})
+
 app.listen(8080, () => {
     console.log("Server is running on http://localhost:8080");
 });
