@@ -127,6 +127,34 @@ app.post('/account-settings', (req, res) => {
         try {
             let pool = await db.connect();
             pool.request().query(
+                `SELECT * FROM [USER_DATABASE].[dbo].[USER_SETTINGS] WHERE Username = '${req.body.Username}'`, 
+                (err, dataset) => {
+                if (err) {
+                    console.log(err);
+                    res.send(err);
+                }
+
+                if (dataset.rowsAffected > 0) {
+                    res.json({ accountSettings: dataset.recordset, code: 200 })
+                }
+                else {
+                    res.json({status: "unable to find account", code: 500})
+                }
+            })
+        }
+        catch (err) {
+            console.log(err);
+            res.send(err);
+        }
+    }
+    query();
+})
+
+app.post('/account-settings/update', (req, res) => {
+    async function query() {
+        try {
+            let pool = await db.connect();
+            pool.request().query(
                 `IF NOT EXISTS (select * FROM [USER_DATABASE].[dbo].[USER_SETTINGS] WHERE Username = '${req.body.Username}')
                 begin
                     INSERT INTO [USER_DATABASE].[dbo].[USER_SETTINGS] (NumberOfResults, DefaultGenre, UserName) 
@@ -152,7 +180,7 @@ app.post('/account-settings', (req, res) => {
             })
 
         }
-        catch(err) {
+        catch (err) {
             console.log(err);
             res.send(err);
         }

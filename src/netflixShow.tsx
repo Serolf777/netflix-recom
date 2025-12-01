@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { NetflixShowData } from "./utilities/constants.tsx";
+import { type NetflixShowData } from "./utilities/interfaces";
 import "./styles/netflixRecom.scss";
 
 interface NetflixShowProps {

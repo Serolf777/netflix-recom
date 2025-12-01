@@ -24,7 +24,7 @@ export async function LLMnetflixQuerySearch(search: string) {
     }
 }
 
-export async function LanguageModel(genre : string, setLoading: (loading: boolean) => VoidFunction) {
+export async function LanguageModel(genre : string, setLoading: (loading: boolean) => void) {
     const result = await LLMnetflixQuery(genre).finally(() => setLoading(false));
 
     console.log("Language model result:", result);
@@ -36,7 +36,7 @@ export async function LanguageModel(genre : string, setLoading: (loading: boolea
     return result?.shows;
 }
 
-export async function LanguageModelSearch(search: string, setLoading: (loading: boolean) => VoidFunction) {
+export async function LanguageModelSearch(search: string, setLoading: (loading: boolean) => void) {
     const result = await LLMnetflixQuerySearch(search).finally(() => setLoading(false));
 
     console.log("Language model result:", result);

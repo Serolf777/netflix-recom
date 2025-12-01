@@ -46,7 +46,7 @@ const Register: FC<RegisterProps> = ({ toggleSignin }) => {
                 })
                 .catch(error => console.log(error));
         }
-        catch(error) {
+        catch (error) {
             console.log(error)
         }
         

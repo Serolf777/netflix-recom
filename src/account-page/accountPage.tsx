@@ -15,6 +15,7 @@ function AccountPage () {
     const [resultNumber, setResultNumber] = useState(numberOfResults[0]);
     const [settingsUpdated, setSettingsUpdated] = useState<null| boolean>(null);
     const [errorUpdating, setErrorUpdating] = useState<null| boolean>(null);
+    const [selectedGenre, setSelectedGenre] = useState<string>("");
     const { getValues, register } = methods;
     const cookies = getCookies();
 
@@ -29,7 +30,7 @@ function AccountPage () {
         const json = JSON.stringify(userSettings);
 
         try {
-            await fetch("http://localhost:8080/account-settings" , {
+            await fetch("http://localhost:8080/account-settings/update" , {
                 method: "POST",
                 body: json,
                 headers: {
@@ -62,6 +63,7 @@ function AccountPage () {
     }
 
     function onGenreChange() {
+        setSelectedGenre(getValues("genres"));
         console.log("Selected genre:", getValues("genres"));
     }
 
@@ -99,7 +101,12 @@ function AccountPage () {
                                     </div>
                                 </div>
                                 <div className="default-genre">
-                                    <GenreDropdown genres={genresList} onChangeHandler={onGenreChange} disablePrompt={true} register={() => register("genres")}/>
+                                    <GenreDropdown 
+                                        selectedGenre={selectedGenre} 
+                                        genres={genresList} 
+                                        onChangeHandler={onGenreChange} 
+                                        disablePrompt={true} register={() => register("genres")}
+                                    />
                                     <div className="input-text">
                                         Default Genre
                                     </div>

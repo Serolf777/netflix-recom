@@ -1,7 +1,7 @@
 import "./header.scss";
 // @ts-ignore
 import companyLogo from "../resources/companyLogo.png";
-import { useState, FC } from "react";
+import { useState, FC, useEffect } from "react";
 import HeaderDropdown from "./headerDropdown.tsx";
 import { isMobile } from "../isMobile.tsx";
 import { getCookies } from "../../utilities/utilityFunctions.tsx";
@@ -20,14 +20,21 @@ const Header: FC<HeaderProps> = ({ toggleModal, toggleSlidein }) => {
     const mobile = isMobile();
     const navigate =  useNavigate();
     const cookies = getCookies();
+    const [username, setUsername] = useState<string | undefined>(cookies["username"]);
 
     function signIn() {
         toggleModal(true);
     }
 
     function signOut() {
-        console.log('signing out...')
+        document.cookie = `username=${cookies["username"]}; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+        setUsername(undefined);
+        setSignInDropdownOpen(false);
     }
+
+    useEffect(() => {
+        setUsername(cookies["username"]);
+    }, [cookies["username"]]);
 
     return (
         <div className="header-section">
@@ -62,11 +69,11 @@ const Header: FC<HeaderProps> = ({ toggleModal, toggleSlidein }) => {
 
             <span className="divider" />
             
-            {cookies["username"] ?
+            {username ?
                 <div>
                     <div className="welcome-parent">
                         <div className="welcome-text" onClick={() => setSignInDropdownOpen(!signInDropdownOpen)}> 
-                            Welcome, {cookies["username"]} 
+                            Welcome, {username} 
                         </div>
                         {signInDropdownOpen && 
                             <HeaderDropdown>

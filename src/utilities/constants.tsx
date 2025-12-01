@@ -59,12 +59,8 @@ export const rateTheSite = [
     "Terrible! Awful!"
 ];
 
-export interface NetflixShowData {
-    ranking: number;
-    name: string;
-    rating: number;
-    link: string;
-    genre: string;
-    description: string;
-    picture: string;
+export const defaultUserSettings = {
+    NumberOfResults: "5",
+    DefaultGenre: "All",
+    Username: ""
 };

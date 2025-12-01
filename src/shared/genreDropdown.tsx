@@ -4,12 +4,13 @@ import { FC } from 'react';
 
 export type GenreDropdownProps = {
     disablePrompt?: boolean;
+    selectedGenre: string;
     genres: string[];
     onChangeHandler: () => void;
     register: () => void;
 }
 
-const GenreDropdown: FC<GenreDropdownProps> = ({ disablePrompt = false, genres, onChangeHandler }) => {
+const GenreDropdown: FC<GenreDropdownProps> = ({ disablePrompt = false, selectedGenre = "", genres, onChangeHandler }) => {
     const { register } = useFormContext();
 
     return (
@@ -17,9 +18,18 @@ const GenreDropdown: FC<GenreDropdownProps> = ({ disablePrompt = false, genres, 
           {!disablePrompt &&
             <label className="dropdown-label">Select a genre: </label>
           }
-          <select id="genres" {...register("genres", { onChange: onChangeHandler })}>
+          <select 
+            id="genres" 
+            {...register("genres", { onChange: onChangeHandler })}
+            value={selectedGenre}
+          >
             {genres.map((genre) => (
-              <option key={genre} value={genre.toLowerCase()}>{genre}</option>
+              <option 
+                key={genre.toLowerCase()} 
+                value={genre.toLowerCase()}
+              >
+                {genre}
+              </option>
             ))}
           </select>
         </div>
