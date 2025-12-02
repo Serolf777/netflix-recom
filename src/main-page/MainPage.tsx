@@ -28,6 +28,7 @@ function MainPage() {
   const [isStockData, setIsStockData] = useState(true);
   const [accountSettings, setAccountSettings] = useState<UserSettings>(defaultUserSettings);
   const [selectedGenre, setSelectedGenre] = useState<string>("");
+  const [numberOfResults, setNumberOfResults] = useState<number>(5);
   const mobile = isMobile();
   const cookies = getCookies();
 
@@ -98,6 +99,7 @@ function MainPage() {
           .then(data => {
             if (data.code == 200) {
               setAccountSettings(data.accountSettings[0]);
+              console.log(data.accountSettings[0]);
             }
             else if (data.code == 500) {
               console.log(data);
@@ -115,6 +117,7 @@ function MainPage() {
 
   useEffect(() => {
     setSelectedGenre(accountSettings.DefaultGenre);
+    setNumberOfResults(parseInt(accountSettings.NumberOfResults));
   }, [accountSettings]);
 
   return (
@@ -136,17 +139,19 @@ function MainPage() {
       }
 
       <div className="netflix-shows-container">
-        {loading ?
-            <div className="lds-dual-ring"/>
-            : errorMessage !== "" ? (
-                <div className="error-message">{errorMessage}</div>
-              ) : (
-                showsArray.map((show, showNumber) => {
-                    return <NetflixShow key={showNumber} showData={show} />
-                  }
-                )
-            )
-          }
+        <div className="netflix-shows-list">
+          {loading ?
+              <div className="lds-dual-ring"/>
+              : errorMessage !== "" ? (
+                  <div className="error-message">{errorMessage}</div>
+                ) : (
+                  showsArray.filter((show, index) => index < numberOfResults).map((show, showNumber) => {
+                      return <NetflixShow key={showNumber} showData={show} />
+                    }
+                  )
+              )
+            }
+          </div>
         </div>
         
         <div className="divider" />

@@ -40,6 +40,11 @@ body.modal-open {
         }
 
         .netflix-shows-container {
+            display: flex;
+            align-items: center;
+            flex-flow: column wrap;
+            max-width: 1366px;
+            margin: 0 auto;
 
             &:before {
                 content: "";
@@ -56,42 +61,46 @@ body.modal-open {
                 margin: 1em auto 0;
                 border-bottom: 1px solid black;
             }
-            
-            .netflixShow {
-                color: black;
-                margin-bottom: 5px;
+
+            .netflix-shows-list {
                 display: flex;
-                margin-left: 20%;
-                margin-right: 20%;
-                margin-top: 4px;
-                margin-bottom: 4px;
+                flex-wrap: wrap;
+                justify-content: center;
+            
+                .netflixShow {
+                    color: black;
+                    display: flex;
+                    flex: 1 0 50%;
+                    max-width: 500px;
+                    margin: 4px 0 4px 0;
 
-                .show-image-container {
-                    flex: 1;
-                }
-
-                .show-details {
-                    flex: 1;
-                    text-align: left;
-
-                    .show-name {
-                        font-weight: bold;
-                        font-size: 20px;
-                        margin-bottom: 10px;
+                    .show-image-container {
+                        flex: 1;
                     }
 
-                    .show-description, .show-genre, .show-rating, .show-link {
-                        margin-bottom: 5px;
-                    }
+                    .show-details {
+                        flex: 1;
+                        text-align: left;
 
-                }
-                .show-image {
-                    float: right;
-                    margin-right: 30px;
-                    max-height: 250px;
-                    max-width: 250px;
-                    height: auto;
-                    width: auto;
+                        .show-name {
+                            font-weight: bold;
+                            font-size: 20px;
+                            margin-bottom: 10px;
+                        }
+
+                        .show-description, .show-genre, .show-rating, .show-link {
+                            margin-bottom: 5px;
+                        }
+
+                    }
+                    .show-image {
+                        float: right;
+                        margin-right: 30px;
+                        max-height: 250px;
+                        max-width: 250px;
+                        height: auto;
+                        width: auto;
+                    }
                 }
             }
         }

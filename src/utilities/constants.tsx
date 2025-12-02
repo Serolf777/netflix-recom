@@ -2,7 +2,7 @@ export const sampleData = [
     { 
         ranking: 1, 
         name: "Action Show", 
-        rating: 8.5,
+        rating: 9.0,
         link: "https://www.netflix.com/title/123456",
         genre: "Action",
         description: "An action-packed show",
@@ -10,6 +10,15 @@ export const sampleData = [
     },
     { 
         ranking: 2, 
+        name: "Anime Show",
+        rating: 8.5,
+        link: "https://www.netflix.com/title/123458",
+        genre: "Anime",
+        description: "Oguri Cap, known as the \"monster\", carves a new legend in racing history.",
+        picture: "https://umamusu.wiki/w/thumb.php?f=Cingray_mv2.jpg&width=1280"
+    },
+    { 
+        ranking: 3, 
         name: "Comedy Show",
         rating: 8.0,
         link: "https://www.netflix.com/title/123457",
@@ -18,13 +27,22 @@ export const sampleData = [
         picture: "https://images.pexels.com/photos/4746228/pexels-photo-4746228.jpeg"
     },
     { 
-        ranking: 3, 
+        ranking: 4, 
         name: "Drama Show",
-        rating: 7.0,
+        rating: 7.5,
         link: "https://www.netflix.com/title/123458",
         genre: "Drama",
         description: "A gripping drama series",
         picture: "https://images.pexels.com/photos/34403059/pexels-photo-34403059.jpeg"
+    },
+    { 
+        ranking: 5, 
+        name: "Documentary Show",
+        rating: 7.0,
+        link: "https://www.netflix.com/title/123458",
+        genre: "Thriller",
+        description: "An interesting documentary show",
+        picture: "https://readysteadycut.com/wp-content/smush-webp/2021/11/AnimalS1universal-base_na_01_zxx.jpeg.webp"
     },
 ];
 
