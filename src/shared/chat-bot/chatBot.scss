@@ -1,0 +1,70 @@
+.chat-bot-container {
+    position: fixed;
+    bottom: 50px;
+    right: 20px;
+    z-index: 1000;
+    background-color: white;
+    border: 1px solid black;
+
+    .chat-bot-open {
+        min-height: 400px;
+        min-width: 300px;
+        display: flex;
+        flex-direction: column;
+
+        .chat-bot-header {
+            display: flex;
+            justify-content: flex-end;
+
+            .close-button {
+                margin: 4px 4px 0 0;
+
+                &:hover {
+                    cursor: pointer;
+                }
+            }
+        }
+
+        .chat-bot-messages {
+            flex-grow: 1;
+            margin: 5px;
+            overflow-y: auto;
+        }
+
+        .chat-bot-textbox {
+            display: flex;
+            flex-grow: 1;
+            margin: 5px;
+
+            .chat-bot-form {
+                display: flex;
+                flex-direction: column;
+                width: 100%;
+                flex: 1;
+
+                .chat-input {
+                    box-sizing: border-box;
+                    width: 100%;
+                    min-height: 200px;
+                    flex: 1;
+                }
+
+                .chat-submit {
+                    align-self: flex-end;
+                    margin-top: 5px;
+                    float: right;
+
+                    &:hover {
+                        cursor: pointer;
+                    }
+                }
+            }
+
+        }
+    }
+
+    .chat-bot-minimized {
+        margin: 0 4px 0 4px;
+        width: 125px;
+    }
+}

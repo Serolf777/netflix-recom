@@ -15,6 +15,7 @@ import Register from "../shared/register.tsx";
 import GenreDropdown from "../shared/genreDropdown.tsx";
 import Footer from "../shared/footer/footer.tsx";
 import { getCookies } from "../utilities/utilityFunctions.tsx";
+import ChatBot from "../shared/chat-bot/chatBot.tsx";
 
 function MainPage() {
   const [ loading, setLoading] = useState(false);
@@ -29,6 +30,7 @@ function MainPage() {
   const [accountSettings, setAccountSettings] = useState<UserSettings>(defaultUserSettings);
   const [selectedGenre, setSelectedGenre] = useState<string>("");
   const [numberOfResults, setNumberOfResults] = useState<number>(5);
+  const [chatBotOpen, setChatBotOpen] = useState<boolean>(false);
   const mobile = isMobile();
   const cookies = getCookies();
 
@@ -211,6 +213,8 @@ function MainPage() {
           />
         </div>
       </SlideinModal>
+
+      <ChatBot open={chatBotOpen} openChatBot={setChatBotOpen} />
     </div>
   );
 }

@@ -82,3 +82,7 @@ export const defaultUserSettings = {
     DefaultGenre: "All",
     Username: ""
 };
+
+export const defaultChatData = {
+    defaultMessage: "How can I assist you today?"
+}
