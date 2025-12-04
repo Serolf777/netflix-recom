@@ -1,8 +1,9 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { SignInValidationSchema } from './validationSchema.tsx';
 import { yupResolver } from '@hookform/resolvers/yup';
 import "./shared.scss";
+import { createUsersRequest } from './api-calls/apiCalls.tsx';
 
 interface RegisterProps {
     toggleSignin: () => void;
@@ -17,39 +18,15 @@ const Register: FC<RegisterProps> = ({ toggleSignin }) => {
     const { register, getValues, handleSubmit, formState: { errors } } = methods;
 
     const onSubmitHandler = async () => {
-        let userAdded = false;
-
         const loginCredentials = {
             userName: getValues("username"),
             password: getValues("password")
         }
         
         const json = JSON.stringify(loginCredentials);
-
-        try {
-            await fetch("http://localhost:8080/users", {
-                    method: "POST",
-                    body: json,
-                    headers: {
-                        "Content-Type": "application/json",
-                        Accept: "application/json"
-                    }
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.code == 200) {
-                        userAdded = true;
-                    } else if (data.code == 500) {
-                        setUserExists(true);
-                    }
-                    console.log(data);
-                })
-                .catch(error => console.log(error));
-        }
-        catch (error) {
-            console.log(error)
-        }
         
+        const userAdded = await createUsersRequest(json, setUserExists);
+
         if (userAdded) {
             setError(false);
             setUserExists(false);

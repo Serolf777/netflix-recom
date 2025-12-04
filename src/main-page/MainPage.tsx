@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { FormProvider, useForm } from 'react-hook-form';
 import NetflixShow from "../netflixShow.tsx";
-import { LanguageModel, LanguageModelSearch } from "../LanguageModel.tsx";
+import { LanguageModel, LanguageModelSearch } from "../shared/api-calls/LanguageModel.tsx";
 import Dropdown from "../shared/dropdown.tsx";
 import { sampleData, genresList, coolPokemonList, rateTheSite, defaultUserSettings } from "../utilities/constants.tsx";
 import { NetflixShowData, UserSettings } from "../utilities/interfaces";
@@ -16,6 +16,7 @@ import GenreDropdown from "../shared/genreDropdown.tsx";
 import Footer from "../shared/footer/footer.tsx";
 import { getCookies } from "../utilities/utilityFunctions.tsx";
 import ChatBot from "../shared/chat-bot/chatBot.tsx";
+import { getAccountSettingsRequest } from "../shared/api-calls/apiCalls.tsx";
 
 function MainPage() {
   const [ loading, setLoading] = useState(false);
@@ -23,7 +24,7 @@ function MainPage() {
   const { register, getValues } = methods;
   const [showsArray, setShowsArray] = useState<NetflixShowData[]>(sampleData);
   const [errorMessage, setErrorMessage] = useState("");
-  const [showModal, setShowModal] = useState(false);
+  const [showSigninModal, setShowSigninModal] = useState(false);
   const [showSlidein, setShowSlidein] = useState(false);
   const [registerModalOpen, setRegisterModalOpen] = useState(false);
   const [isStockData, setIsStockData] = useState(true);
@@ -72,49 +73,16 @@ function MainPage() {
   }
 
   function registerClicked() {
-    setShowModal(false);
+    setShowSigninModal(false);
     setRegisterModalOpen(true);
   }
 
-  async function signinClicked () {
-    setShowModal(false);
-  }
+  const fetchData = useCallback(async () => {
+    await getAccountSettingsRequest(cookies, setAccountSettings);
+  }, []);
 
   useEffect(() => {
-    if (cookies["username"]) {
-      async function fetchData() {
-        const user = {
-          Username: cookies["username"]
-        }
-      
-        const json = JSON.stringify(user);
-        try {
-          await fetch('http://localhost:8080/account-settings', {
-            method: 'POST',
-            body: json,
-            headers: {
-                "Content-Type": "application/json",
-                Accept: "application/json"
-            }
-          })
-          .then(response => response.json())
-          .then(data => {
-            if (data.code == 200) {
-              setAccountSettings(data.accountSettings[0]);
-              console.log(data.accountSettings[0]);
-            }
-            else if (data.code == 500) {
-              console.log(data);
-            }
-          })
-          .catch(error => console.log(error))
-        }
-        catch (error) {
-          console.log(error);
-        }
-      }
-      fetchData();
-    }
+    fetchData().catch(console.error);
   }, [cookies["username"]]);
 
   useEffect(() => {
@@ -124,9 +92,9 @@ function MainPage() {
 
   return (
     <div className={classNames("main-page", {
-      ["modal-open"] : showModal
+      ["modal-open"] : showSigninModal
     })}>
-      <Header modalOpen={showModal} toggleModal={setShowModal} toggleSlidein={setShowSlidein}/>
+      <Header modalOpen={showSigninModal} toggleModal={setShowSigninModal} toggleSlidein={setShowSlidein}/>
       <div className="site-body">
 
       <h3 className={classNames("announcement", {
@@ -189,12 +157,12 @@ function MainPage() {
 
       <Footer />
         
-      <Modal modalOpen={showModal} toggleModal={setShowModal}>
-        <Signin submitClicked={signinClicked} registerClicked={registerClicked}/> 
+      <Modal modalOpen={showSigninModal} toggleModal={setShowSigninModal}>
+        <Signin submitClicked={() => setShowSigninModal(false)} registerClicked={registerClicked}/> 
       </Modal>
 
       <Modal modalOpen={registerModalOpen} toggleModal={setRegisterModalOpen}>
-        <Register toggleSignin={() => setRegisterModalOpen} />
+        <Register toggleSignin={() => setRegisterModalOpen(false)} />
       </Modal>
 
       <SlideinModal slideinOpen={showSlidein} toggleSlidein={setShowSlidein}>
@@ -214,7 +182,9 @@ function MainPage() {
         </div>
       </SlideinModal>
 
-      <ChatBot open={chatBotOpen} openChatBot={setChatBotOpen} />
+      {!showSigninModal && !registerModalOpen &&
+        <ChatBot open={chatBotOpen} openChatBot={setChatBotOpen} />
+      }
     </div>
   );
 }

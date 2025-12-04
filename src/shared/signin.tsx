@@ -4,6 +4,7 @@ import { SignInValidationSchema } from './validationSchema.tsx';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { expireTime } from '../utilities/utilityFunctions.tsx';
 import "./shared.scss";
+import { signInRequest } from './api-calls/apiCalls.tsx';
 
 interface SigninProps {
     submitClicked: () => void;
@@ -24,32 +25,7 @@ const Signin: FC<SigninProps> = ({ submitClicked, registerClicked }) => {
         }
         const json = JSON.stringify(loginCredentials);
 
-        try {
-            await fetch("http://localhost:8080/signin", {
-                    method: "POST",
-                    body: json,
-                    headers: {
-                        "Content-Type": "application/json",
-                        Accept: "application/json"
-                    }
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.code == 200) {
-                        setLoginError(false);
-                        document.cookie = `username=${getValues("username")}; expires ${expireTime()}; path=/;`
-                        submitClicked();
-                    } 
-                    else {
-                        setLoginError(true);
-                    }
-                    console.log(data);
-                })
-                .catch(error => console.log(error));
-        }
-        catch(error) {
-            console.log(error)
-        }
+        await signInRequest(json, getValues("username"), expireTime(), setLoginError, submitClicked);
   }
 
     return (

@@ -5,6 +5,7 @@
     z-index: 1000;
     background-color: white;
     border: 1px solid black;
+    border-radius: 4px;
 
     .chat-bot-open {
         min-height: 400px;
@@ -26,6 +27,8 @@
         }
 
         .chat-bot-messages {
+            color: black;
+            font-weight: bold;
             flex-grow: 1;
             margin: 5px;
             overflow-y: auto;
@@ -64,7 +67,19 @@
     }
 
     .chat-bot-minimized {
-        margin: 0 4px 0 4px;
+        margin: 4px;
         width: 125px;
+        border-radius: 8px;
+        display:flex;
+        flex-direction: row;
+
+        .chat-bot-icon {
+            color: black;
+            align-self: center;
+
+            &:hover {
+                cursor: pointer;
+            }
+        }
     }
 }

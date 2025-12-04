@@ -8,6 +8,7 @@ import { FormProvider, useForm } from "react-hook-form";
 import Dropdown from "../shared/dropdown.tsx";
 import { useState } from "react";
 import { getCookies } from "../utilities/utilityFunctions.tsx";
+import { saveSettingsRequest } from "../shared/api-calls/apiCalls.tsx";
 
 function AccountPage () {
     const navigate = useNavigate();
@@ -29,32 +30,7 @@ function AccountPage () {
 
         const json = JSON.stringify(userSettings);
 
-        try {
-            await fetch("http://localhost:8080/account-settings/update" , {
-                method: "POST",
-                body: json,
-                headers: {
-                    "Content-Type": "application/json",
-                    Accept: "application/json"
-                }
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.code == 200) {
-                    accountUpdated = true;
-                    setErrorUpdating(false);
-                } else if (data.code == 500) {
-                    setErrorUpdating(true);
-                }
-                console.log(data);
-            })
-            .catch(error => console.log(error));
-        }
-        catch (error) {
-            console.log('error')
-        }
-
-        setSettingsUpdated(accountUpdated);
+        await saveSettingsRequest(json, accountUpdated, setSettingsUpdated, setErrorUpdating);
     }
 
     function onNumResultChange(resultNumber: string) {

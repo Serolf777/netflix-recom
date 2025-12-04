@@ -2,6 +2,7 @@ import "./chatBot.scss"
 import { FC, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import CloseIcon from '@mui/icons-material/Close';
+import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
 import { defaultChatData } from "../../utilities/constants.tsx";
 
 export interface ChatBotProps {
@@ -42,8 +43,15 @@ const ChatBot: FC<ChatBotProps> = ({ open, openChatBot }) => {
                     </div>
                 </div>
                 : 
-                <div className="chat-bot-minimized" onClick={() => openChatBot(!open)}> 
-                    Open chat bot? 
+                <div className="chat-bot-minimized" >
+                    <div className="chat-bot-minimized-text">
+                        <div>
+                            Need some help?
+                        </div>
+                    </div>
+                    <div className="chat-bot-icon" onClick={() => openChatBot(true)}>
+                        <ChatBubbleOutlineIcon />
+                    </div>
                 </div>
             }
         </div>
