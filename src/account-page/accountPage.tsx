@@ -3,20 +3,20 @@ import Footer from "../shared/footer/footer.tsx";
 import "./accountPage.scss"
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import GenreDropdown from "../shared/genreDropdown.tsx";
-import { genresList, numberOfResults } from "../utilities/constants.tsx";
+import { defaultUserSettings, genresList, numberOfResults } from "../utilities/constants.tsx";
 import { FormProvider, useForm } from "react-hook-form";
 import Dropdown from "../shared/dropdown.tsx";
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { getCookies } from "../utilities/utilityFunctions.tsx";
-import { saveSettingsRequest } from "../shared/api-calls/apiCalls.tsx";
+import { getAccountSettingsRequest, saveSettingsRequest } from "../shared/api-calls/apiCalls.tsx";
+import { UserSettings } from "../utilities/interfaces";
 
 function AccountPage () {
     const navigate = useNavigate();
     const methods = useForm();
-    const [resultNumber, setResultNumber] = useState(numberOfResults[0]);
     const [settingsUpdated, setSettingsUpdated] = useState<null| boolean>(null);
     const [errorUpdating, setErrorUpdating] = useState<null| boolean>(null);
-    const [selectedGenre, setSelectedGenre] = useState<string>("");
+    const [accountSettings, setAccountSettings] = useState<UserSettings>(defaultUserSettings);
     const { getValues, register } = methods;
     const cookies = getCookies();
 
@@ -24,8 +24,8 @@ function AccountPage () {
         let accountUpdated = false;
         const userSettings = {
             Username: cookies["username"],
-            NumOfResults: resultNumber,
-            DefaultGenre: getValues('genres')
+            NumOfResults: accountSettings.NumberOfResults,
+            DefaultGenre: accountSettings.DefaultGenre
         }
 
         const json = JSON.stringify(userSettings);
@@ -34,14 +34,22 @@ function AccountPage () {
     }
 
     function onNumResultChange(resultNumber: string) {
-        setResultNumber(resultNumber);
+        setAccountSettings({ ...accountSettings, NumberOfResults: resultNumber });
         console.log("Selected num of results:", resultNumber);
     }
 
     function onGenreChange() {
-        setSelectedGenre(getValues("genres"));
+        setAccountSettings({ ...accountSettings, DefaultGenre: getValues("genres") })
         console.log("Selected genre:", getValues("genres"));
     }
+
+    const fetchData = useCallback(async () => {
+        await getAccountSettingsRequest(cookies, setAccountSettings);
+      }, []);
+    
+    useEffect(() => {
+        fetchData().catch(console.error);
+    }, [cookies["username"]]);
 
     const updateMessage = errorUpdating ? " Unable to update user settings" : "User settings updated";
 
@@ -71,14 +79,19 @@ function AccountPage () {
                         <FormProvider { ...methods }>
                             <form className="account-settings-form" onSubmit={(e) => e.preventDefault()}>
                                 <div className="results-number">
-                                    <Dropdown dropdownOptions={numberOfResults} onChangeHandler={onNumResultChange} disablePrompt={true} />
+                                    <Dropdown 
+                                        defaultOption={accountSettings.NumberOfResults} 
+                                        dropdownOptions={numberOfResults} 
+                                        onChangeHandler={onNumResultChange} 
+                                        disablePrompt={true} 
+                                    />
                                     <div className="input-text">
                                         Number of Results
                                     </div>
                                 </div>
                                 <div className="default-genre">
                                     <GenreDropdown 
-                                        selectedGenre={selectedGenre} 
+                                        selectedGenre={accountSettings.DefaultGenre} 
                                         genres={genresList} 
                                         onChangeHandler={onGenreChange} 
                                         disablePrompt={true} register={() => register("genres")}

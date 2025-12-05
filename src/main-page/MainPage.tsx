@@ -17,6 +17,7 @@ import Footer from "../shared/footer/footer.tsx";
 import { getCookies } from "../utilities/utilityFunctions.tsx";
 import ChatBot from "../shared/chat-bot/chatBot.tsx";
 import { getAccountSettingsRequest } from "../shared/api-calls/apiCalls.tsx";
+import "./mainPage.scss"
 
 function MainPage() {
   const [ loading, setLoading] = useState(false);
@@ -30,7 +31,7 @@ function MainPage() {
   const [isStockData, setIsStockData] = useState(true);
   const [accountSettings, setAccountSettings] = useState<UserSettings>(defaultUserSettings);
   const [selectedGenre, setSelectedGenre] = useState<string>("");
-  const [numberOfResults, setNumberOfResults] = useState<number>(5);
+  const [numberOfResults, setNumberOfResults] = useState<number>(parseInt(defaultUserSettings.NumberOfResults));
   const [chatBotOpen, setChatBotOpen] = useState<boolean>(false);
   const mobile = isMobile();
   const cookies = getCookies();
@@ -182,7 +183,7 @@ function MainPage() {
         </div>
       </SlideinModal>
 
-      {!showSigninModal && !registerModalOpen &&
+      {!showSigninModal && !registerModalOpen && !showSlidein &&
         <ChatBot open={chatBotOpen} openChatBot={setChatBotOpen} />
       }
     </div>

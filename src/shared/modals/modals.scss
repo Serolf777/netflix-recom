@@ -1,9 +1,5 @@
 .modal {
     position: fixed;
-    height: 400px;
-    width: 400px;
-    border: 2px solid black;
-    background: #F0F8FF;
     color: black;
 
     &.mobile {
@@ -19,7 +15,8 @@
         width: 400px;;
         z-index: 1000;
         opacity: 1;
-        background: white;
+        background: #F0F8FF;
+        border: 2px solid black;
 
         &.mobile {
             width: 100%;
