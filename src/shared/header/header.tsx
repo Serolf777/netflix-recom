@@ -7,23 +7,33 @@ import { isMobile } from "../isMobile.tsx";
 import { getCookies } from "../../utilities/utilityFunctions.tsx";
 import { useNavigate } from 'react-router';
 import classNames from "classnames";
+import Modal from "../modals/modal.tsx";
+import Signin from "../signin.tsx";
+import Register from "../register.tsx";
+import SlideinModal from "../modals/slideinModal.tsx";
+import Dropdown from "../dropdown.tsx";
+import { coolPokemonList, genresList, rateTheSite } from "../../utilities/constants.tsx";
 
 export interface HeaderProps {
-    modalOpen: boolean;
-    toggleModal: (toggle: boolean) => void;
-    toggleSlidein: (toggle: boolean) => void;
+    setModalOpen: (toggle: boolean) => void;
+    setMenuOpen: (open: boolean) => void;
+    showSlideinButton?: boolean;
 }
 
-const Header: FC<HeaderProps> = ({ toggleModal, toggleSlidein }) => {
+const Header: FC<HeaderProps> = ({ setModalOpen, showSlideinButton, setMenuOpen }) => {
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const [signInDropdownOpen, setSignInDropdownOpen] = useState(false);
+    const [showSigninModal, setShowSigninModal] = useState(false);
+    const [registerModalOpen, setRegisterModalOpen] = useState(false);
+    const [showSlidein, setShowSlidein] = useState(false);
     const mobile = isMobile();
     const navigate =  useNavigate();
     const cookies = getCookies();
     const [username, setUsername] = useState<string | undefined>(cookies["username"]);
 
     function signIn() {
-        toggleModal(true);
+        setModalOpen(true);
+        setShowSigninModal(true);
     }
 
     function signOut() {
@@ -32,9 +42,33 @@ const Header: FC<HeaderProps> = ({ toggleModal, toggleSlidein }) => {
         setSignInDropdownOpen(false);
     }
 
+    function registerClicked() {
+        setShowSigninModal(false);
+        setRegisterModalOpen(true);
+    }
+
+    function slideInOptionSelected(option : string) {
+        console.log(`option selected: ${option}`)
+    }
+
     useEffect(() => {
         setUsername(cookies["username"]);
     }, [cookies["username"]]);
+
+    useEffect(() => {
+        if (showSigninModal || registerModalOpen|| showSlidein) {
+            setMenuOpen(true);
+        } 
+        else {
+            setMenuOpen(false);
+        }
+        if (showSigninModal || registerModalOpen) {
+            setModalOpen(true);
+        } 
+        else {
+            setModalOpen(false);
+        }
+    }, [showSigninModal, registerModalOpen, showSlidein]);
 
     return (
         <div className="header-section">
@@ -62,12 +96,14 @@ const Header: FC<HeaderProps> = ({ toggleModal, toggleSlidein }) => {
                 Welcome to Netflix recommendations!
             </div> 
 
-            
-            <div className="slidein-button" onClick={() => toggleSlidein(true)}>
-                Slidein
-            </div>
-
-            <span className="divider" />
+            {showSlideinButton &&
+                <>
+                    <div className="slidein-button" onClick={() => setShowSlidein(true)}>
+                        Slidein
+                    </div>
+                    <span className="divider" />
+                </>
+            }
             
             {username ?
                 <div>
@@ -92,6 +128,34 @@ const Header: FC<HeaderProps> = ({ toggleModal, toggleSlidein }) => {
                     Sign in!
             </div>
             }
+
+            <Modal modalOpen={showSigninModal} toggleModal={setShowSigninModal}>
+                <Signin submitClicked={() => setShowSigninModal(false)} registerClicked={registerClicked}/> 
+            </Modal>
+
+            <Modal modalOpen={registerModalOpen} toggleModal={setRegisterModalOpen}>
+                <Register toggleSignin={() => setRegisterModalOpen(false)} />
+            </Modal>
+
+            
+
+        <SlideinModal slideinOpen={showSlidein} toggleSlidein={setShowSlidein}>
+            <div>
+                <div>Look at this slide in!</div>
+                <Dropdown dropdownOptions={genresList} onChangeHandler={slideInOptionSelected}/>
+                <Dropdown 
+                    customPrompt="What's your favorite pokemon?" 
+                    dropdownOptions={coolPokemonList} 
+                    onChangeHandler={slideInOptionSelected}
+                />
+                <Dropdown
+                    customPrompt="What would you rate this site?"
+                    dropdownOptions={rateTheSite} 
+                    onChangeHandler={slideInOptionSelected}
+                />
+            </div>
+        </SlideinModal>
+
         </div>
     )
 };

@@ -10,6 +10,7 @@ import { useCallback, useEffect, useState } from "react";
 import { getCookies } from "../utilities/utilityFunctions.tsx";
 import { getAccountSettingsRequest, saveSettingsRequest } from "../shared/api-calls/apiCalls.tsx";
 import { UserSettings } from "../utilities/interfaces";
+import Header from "../shared/header/header.tsx";
 
 function AccountPage () {
     const navigate = useNavigate();
@@ -17,6 +18,8 @@ function AccountPage () {
     const [settingsUpdated, setSettingsUpdated] = useState<null| boolean>(null);
     const [errorUpdating, setErrorUpdating] = useState<null| boolean>(null);
     const [accountSettings, setAccountSettings] = useState<UserSettings>(defaultUserSettings);
+    const [menuOpen, setMenuOpen] = useState(false);
+    const [modalOpen, setModalOpen] = useState(false);
     const { getValues, register } = methods;
     const cookies = getCookies();
 
@@ -55,7 +58,9 @@ function AccountPage () {
 
     return (
         <div className="account-page">
-            <div className="header">
+            <Header setMenuOpen={setMenuOpen} setModalOpen={setModalOpen}/>
+
+            <div className="account-page-header">
                 <div className="go-back" onClick={() => navigate("/")}>
                     <ArrowBackIcon />
                     Main Page
@@ -76,6 +81,10 @@ function AccountPage () {
                         <div className="account-settings-header">
                             Account Settings
                         </div>
+                        <div className="account-settings-subheader"> 
+                            Update your account settings below and then click "Save Settings".
+                        </div>
+
                         <FormProvider { ...methods }>
                             <form className="account-settings-form" onSubmit={(e) => e.preventDefault()}>
                                 <div className="results-number">
@@ -100,6 +109,7 @@ function AccountPage () {
                                         Default Genre
                                     </div>
                                 </div>
+                                <div className="divider" />
                                 <div className="submit-button">
                                     <button type="submit" value="submit" onClick={() => saveSettings()}> 
                                         Save Settings 
