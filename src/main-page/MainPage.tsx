@@ -1,6 +1,6 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { FormProvider, useForm } from 'react-hook-form';
-import NetflixShow from "../netflixShow.tsx";
+import NetflixShow from "./netflixShows/netflixShow.tsx";
 import { LanguageModel, LanguageModelSearch } from "../shared/api-calls/LanguageModel.tsx";
 import { sampleData, genresList, defaultUserSettings } from "../utilities/constants.tsx";
 import { NetflixShowData, UserSettings } from "../utilities/interfaces";
@@ -23,7 +23,6 @@ function MainPage() {
   const [isStockData, setIsStockData] = useState(true);
   const [accountSettings, setAccountSettings] = useState<UserSettings>(defaultUserSettings);
   const [selectedGenre, setSelectedGenre] = useState<string>("");
-  const [numberOfResults, setNumberOfResults] = useState<number>(parseInt(defaultUserSettings.NumberOfResults));
   const [chatBotOpen, setChatBotOpen] = useState<boolean>(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -73,8 +72,26 @@ function MainPage() {
 
   useEffect(() => {
     setSelectedGenre(accountSettings.DefaultGenre);
-    setNumberOfResults(parseInt(accountSettings.NumberOfResults));
   }, [accountSettings]);
+
+  const filteredArray = useMemo(() => {
+    const filteredShowsArray: NetflixShowData[] = [];
+
+    for (let i = 0; showsArray.length > i; i++) {
+      if (filteredShowsArray.length >= parseInt(accountSettings.NumberOfResults)) {
+        break;
+      }
+
+      if (accountSettings.DefaultGenre.toLowerCase() == 'all') {
+        filteredShowsArray.push(showsArray[i]);
+      }
+      else if (accountSettings.DefaultGenre.toLowerCase() == showsArray[i].genre.toLowerCase()) {
+        filteredShowsArray.push(showsArray[i]);
+      }
+    }
+
+    return filteredShowsArray;
+  }, [showsArray, accountSettings]);
 
   return (
     <div className="main-page">
@@ -98,12 +115,17 @@ function MainPage() {
               <div className="lds-dual-ring"/>
               : errorMessage !== "" ? (
                   <div className="error-message">{errorMessage}</div>
-                ) : (
-                  showsArray.filter((show, index) => index < numberOfResults).map((show, showNumber) => {
+                ) : 
+                filteredArray.length > 0 ?
+                (
+                  filteredArray.map((show, showNumber) => {
                       return <NetflixShow key={showNumber} showData={show} />
                     }
                   )
-              )
+              ) :
+              <div>
+                No results
+              </div>
             }
           </div>
         </div>

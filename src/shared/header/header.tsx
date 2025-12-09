@@ -48,7 +48,7 @@ const Header: FC<HeaderProps> = ({ setModalOpen, showSlideinButton, setMenuOpen 
     }
 
     function slideInOptionSelected(option : string) {
-        console.log(`option selected: ${option}`)
+        console.log(`option selected: ${option}`);
     }
 
     useEffect(() => {
@@ -97,13 +97,12 @@ const Header: FC<HeaderProps> = ({ setModalOpen, showSlideinButton, setMenuOpen 
             </div> 
 
             {showSlideinButton &&
-                <>
-                    <div className="slidein-button" onClick={() => setShowSlidein(true)}>
-                        Slidein
-                    </div>
-                    <span className="divider" />
-                </>
+                <div className="slidein-button" onClick={() => setShowSlidein(true)}>
+                    Slidein
+                </div>
             }
+
+            <span className="divider" />
             
             {username ?
                 <div>
@@ -137,15 +136,16 @@ const Header: FC<HeaderProps> = ({ setModalOpen, showSlideinButton, setMenuOpen 
                 <Register toggleSignin={() => setRegisterModalOpen(false)} />
             </Modal>
 
-            
-
         <SlideinModal slideinOpen={showSlidein} toggleSlidein={setShowSlidein}>
             <div>
                 <div>Look at this slide in!</div>
-                <Dropdown dropdownOptions={genresList} onChangeHandler={slideInOptionSelected}/>
+                <Dropdown 
+                    dropdownOptions={genresList}
+                    onChangeHandler={slideInOptionSelected}
+                />
                 <Dropdown 
                     customPrompt="What's your favorite pokemon?" 
-                    dropdownOptions={coolPokemonList} 
+                    dropdownOptions={coolPokemonList}
                     onChangeHandler={slideInOptionSelected}
                 />
                 <Dropdown
