@@ -26,7 +26,7 @@ const Signin: FC<SigninProps> = ({ submitClicked, registerClicked }) => {
         const json = JSON.stringify(loginCredentials);
 
         await signInRequest(json, getValues("username"), expireTime(), setLoginError, submitClicked);
-  }
+    }
 
     return (
         <FormProvider {...methods} >

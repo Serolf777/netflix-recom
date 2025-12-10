@@ -1,8 +1,8 @@
 import { UserSettings } from "../../utilities/interfaces";
 
-export async function getAccountSettingsRequest(cookies: Record<string, string>, setAccountSettings: (settings: UserSettings) => void) {
+export async function getAccountSettingsRequest(username: string, setAccountSettings: (settings: UserSettings) => void) {
     const user = {
-          Username: cookies["username"]
+          Username: username
         }
       
     const json = JSON.stringify(user);
@@ -108,17 +108,16 @@ export async function signInRequest(loginCredentials: string, username: string, 
             .then(data => {
                 if (data.code == 200) {
                     setLoginError(false);
-                    document.cookie = `username=${username}; expires=${expireTime}; path=/;`
+                    document.cookie = `username=${username}; expires=${expireTime}; path=/;`;
                     submitClicked();
                 } 
                 else {
                     setLoginError(true);
                 }
-                console.log(data);
             })
             .catch(error => console.log(error));
     }
     catch(error) {
-        console.log(error)
+        console.log(error);
     }
 };

@@ -6,11 +6,12 @@ import GenreDropdown from "../shared/genreDropdown.tsx";
 import { defaultUserSettings, genresList, numberOfResults } from "../utilities/constants.tsx";
 import { FormProvider, useForm } from "react-hook-form";
 import Dropdown from "../shared/dropdown.tsx";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { getCookies } from "../utilities/utilityFunctions.tsx";
 import { getAccountSettingsRequest, saveSettingsRequest } from "../shared/api-calls/apiCalls.tsx";
 import { UserSettings } from "../utilities/interfaces";
 import Header from "../shared/header/header.tsx";
+import { LoginContext, LoginContextType } from "../utilities/contexts.tsx";
 
 function AccountPage () {
     const navigate = useNavigate();
@@ -21,12 +22,12 @@ function AccountPage () {
     const [menuOpen, setMenuOpen] = useState(false);
     const [modalOpen, setModalOpen] = useState(false);
     const { getValues, register } = methods;
-    const cookies = getCookies();
+    const { username } = useContext(LoginContext) as LoginContextType;
 
     const saveSettings = async () => {
         let accountUpdated = false;
         const userSettings = {
-            Username: cookies["username"],
+            Username: username,
             NumOfResults: accountSettings.NumberOfResults,
             DefaultGenre: accountSettings.DefaultGenre
         }
@@ -47,12 +48,12 @@ function AccountPage () {
     }
 
     const fetchData = useCallback(async () => {
-        await getAccountSettingsRequest(cookies, setAccountSettings);
-      }, []);
+        await getAccountSettingsRequest(username, setAccountSettings);
+      }, [username]);
     
     useEffect(() => {
         fetchData().catch(console.error);
-    }, [cookies["username"]]);
+    }, [username]);
 
     const updateMessage = errorUpdating ? " Unable to update user settings" : "User settings updated";
 
@@ -67,7 +68,7 @@ function AccountPage () {
                 </div>
             </div>
 
-            {cookies["username"] ?
+            {username ?
                 <div className="account-content">
                     {settingsUpdated ?
                         <div className="update-message">
@@ -120,8 +121,10 @@ function AccountPage () {
                     </div>
                 </div>
                 :
-                <div>
-                    Please login in order to update your settings.
+                <div className="login-notification-content">
+                    <div className="login-notification">
+                        Please login in order to update your settings.
+                    </div>
                 </div>
 
             }

@@ -40,11 +40,11 @@
         .account-settings {
             display: flex;
             flex-direction: column;
+            width: 90vw;
             max-width: 1320px;
             border: 1px solid black;
             background: white;
             flex: 1;
-            width: 100%;
             margin: 12px 0 12px 0;
 
             .account-settings-header {
@@ -92,6 +92,28 @@
                     justify-content: flex-end;
                 }
             }
+        }
+    }
+
+    .login-notification-content {
+        min-height: 500px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        flex: 1;
+
+        .login-notification {
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 90vw;
+            max-width: 1320px;
+            border: 1px solid black;
+            background: white;
+            flex: 1;
+            margin: 32px;
         }
     }
 }

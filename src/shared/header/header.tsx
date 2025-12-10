@@ -1,7 +1,7 @@
 import "./header.scss";
 // @ts-ignore
 import companyLogo from "../resources/companyLogo.png";
-import { useState, FC, useEffect } from "react";
+import { useState, FC, useEffect, useContext } from "react";
 import HeaderDropdown from "./headerDropdown.tsx";
 import { isMobile } from "../isMobile.tsx";
 import { getCookies } from "../../utilities/utilityFunctions.tsx";
@@ -13,6 +13,7 @@ import Register from "../register.tsx";
 import SlideinModal from "../modals/slideinModal.tsx";
 import Dropdown from "../dropdown.tsx";
 import { coolPokemonList, genresList, rateTheSite } from "../../utilities/constants.tsx";
+import { LoginContext, LoginContextType } from "../../utilities/contexts.tsx";
 
 export interface HeaderProps {
     setModalOpen: (toggle: boolean) => void;
@@ -29,7 +30,7 @@ const Header: FC<HeaderProps> = ({ setModalOpen, showSlideinButton, setMenuOpen 
     const mobile = isMobile();
     const navigate =  useNavigate();
     const cookies = getCookies();
-    const [username, setUsername] = useState<string | undefined>(cookies["username"]);
+    const { username, setUsername } = useContext(LoginContext) as LoginContextType;
 
     function signIn() {
         setModalOpen(true);
@@ -38,7 +39,7 @@ const Header: FC<HeaderProps> = ({ setModalOpen, showSlideinButton, setMenuOpen 
 
     function signOut() {
         document.cookie = `username=${cookies["username"]}; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
-        setUsername(undefined);
+        setUsername("");
         setSignInDropdownOpen(false);
     }
 
@@ -136,26 +137,25 @@ const Header: FC<HeaderProps> = ({ setModalOpen, showSlideinButton, setMenuOpen 
                 <Register toggleSignin={() => setRegisterModalOpen(false)} />
             </Modal>
 
-        <SlideinModal slideinOpen={showSlidein} toggleSlidein={setShowSlidein}>
-            <div>
-                <div>Look at this slide in!</div>
-                <Dropdown 
-                    dropdownOptions={genresList}
-                    onChangeHandler={slideInOptionSelected}
-                />
-                <Dropdown 
-                    customPrompt="What's your favorite pokemon?" 
-                    dropdownOptions={coolPokemonList}
-                    onChangeHandler={slideInOptionSelected}
-                />
-                <Dropdown
-                    customPrompt="What would you rate this site?"
-                    dropdownOptions={rateTheSite} 
-                    onChangeHandler={slideInOptionSelected}
-                />
-            </div>
-        </SlideinModal>
-
+            <SlideinModal slideinOpen={showSlidein} toggleSlidein={setShowSlidein}>
+                <div>
+                    <div>Look at this slide in!</div>
+                    <Dropdown 
+                        dropdownOptions={genresList}
+                        onChangeHandler={slideInOptionSelected}
+                    />
+                    <Dropdown 
+                        customPrompt="What's your favorite pokemon?" 
+                        dropdownOptions={coolPokemonList}
+                        onChangeHandler={slideInOptionSelected}
+                    />
+                    <Dropdown
+                        customPrompt="What would you rate this site?"
+                        dropdownOptions={rateTheSite} 
+                        onChangeHandler={slideInOptionSelected}
+                    />
+                </div>
+            </SlideinModal>
         </div>
     )
 };

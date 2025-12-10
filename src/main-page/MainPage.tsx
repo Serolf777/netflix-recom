@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { FormProvider, useForm } from 'react-hook-form';
 import NetflixShow from "./netflixShows/netflixShow.tsx";
 import { LanguageModel, LanguageModelSearch } from "../shared/api-calls/LanguageModel.tsx";
@@ -13,6 +13,7 @@ import { getCookies } from "../utilities/utilityFunctions.tsx";
 import ChatBot from "../shared/chat-bot/chatBot.tsx";
 import { getAccountSettingsRequest } from "../shared/api-calls/apiCalls.tsx";
 import "./mainPage.scss"
+import { LoginContext, LoginContextProvider, LoginContextType } from "../utilities/contexts.tsx";
 
 function MainPage() {
   const [ loading, setLoading] = useState(false);
@@ -27,7 +28,7 @@ function MainPage() {
   const [modalOpen, setModalOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const mobile = isMobile();
-  const cookies = getCookies();
+  const { username } = useContext(LoginContext) as LoginContextType;
 
   function onChangeHandler() {
     setSelectedGenre(getValues("genres"));
@@ -63,12 +64,17 @@ function MainPage() {
   }
 
   const fetchData = useCallback(async () => {
-    await getAccountSettingsRequest(cookies, setAccountSettings);
-  }, []);
+    await getAccountSettingsRequest(username, setAccountSettings);
+  }, [username]);
 
   useEffect(() => {
-    fetchData().catch(console.error);
-  }, [cookies["username"]]);
+    if (username) {
+      fetchData().catch(console.error);
+    }
+    else {
+      setAccountSettings(defaultUserSettings);
+    }
+  }, [username]);
 
   useEffect(() => {
     setSelectedGenre(accountSettings.DefaultGenre);
