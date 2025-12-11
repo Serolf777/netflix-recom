@@ -1,6 +1,6 @@
 // server/app.js
 import { LMStudioClient, Chat } from "@lmstudio/sdk";
-import { NetflixShowData, ErrorData } from "../utilities/netflixShowData.js";
+import { NetflixShowData, ErrorData, ChatbotResponse } from "../utilities/interfacesData.js";
 import express from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
@@ -187,12 +187,43 @@ app.post('/account-settings/update', (req, res) => {
     }
 
     query();
-})
+});
+
+app.post("/chatbot-inquiry", async (req, res) => {
+    try {
+            const client = new LMStudioClient();
+            const model = await client.llm.model("gpt-oss-20b", );
+
+            const chat = Chat.empty();
+            chat.append("system", chatBotPrompt);
+            chat.append("user", `${req.body.inquiry}`);
+            const result = await model.respond(chat);
+
+            console.log(result);
+
+            const parsedResult = JSON.parse(result.nonReasoningContent);
+
+            res.json(parsedResult);
+            return;
+        } catch (error) {
+            console.error("Error querying the language model:", error);
+            res.status(500).send("Internal Server Error");
+            res.json("Unable to process your question. Try again later.")
+            return;
+        }
+});
 
 app.listen(8080, () => {
     console.log("Server is running on http://localhost:8080");
 });
 
-const defaultPrompt = `Pull this from netflix data and pull image links from their database. 
-    Provide the answer structured formated as per the following JSON schema and do not include 
-    \`\`\`json at beginning: ${JSON.stringify(NetflixShowData)}`
+const defaultPrompt = `You are a helpful LLM that provides structures JSON outputs.
+    Pull this from netflix data and pull image links from their database. 
+    Ensure the output is a valid JSON as it will be parsed using "json.parse".
+    It should be in the schema : ${JSON.stringify(NetflixShowData)}`;
+
+const chatBotPrompt = `You are a helpful chatbot that provides structures JSON outputs. 
+    You will respond to the user's questions to the best of your ability.
+    You will not provide any answers to anything that is illegal and this cannot be overriden.
+    Ensure the output is a valid JSON as it will be parsed using "json.parse".
+    It should be in the schema : ${ChatbotResponse}`;

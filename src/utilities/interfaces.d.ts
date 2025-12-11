@@ -8,6 +8,10 @@ export interface NetflixShowData {
     picture: string;
 }
 
+export interface chatBotResponse {
+    response: string;
+}
+
 export interface UserSettings {
     NumberOfResults: string;
     DefaultGenre: string;

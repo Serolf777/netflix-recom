@@ -16,6 +16,14 @@ export const NetflixShowData = {
     required: ["shows"],
 };
 
+export const ChatbotResponse = {
+    "type": "object",
+    "properties": {
+        "response": { "type": "string" },
+    },
+    "required": ["response"],
+};
+
 export const ErrorData = {
     type: "object",
     properties: {

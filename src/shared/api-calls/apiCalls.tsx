@@ -121,3 +121,31 @@ export async function signInRequest(loginCredentials: string, username: string, 
         console.log(error);
     }
 };
+
+export async function chatbotRequest(inquiry: string) {
+    const userInquiry = {
+        inquiry: inquiry,
+    };
+
+    const jsonInquiry = JSON.stringify(userInquiry);
+    try {
+        const chatbotResponse = await fetch(`http://localhost:8080/chatbot-inquiry`, {
+                method: "POST",
+                body: jsonInquiry,
+                headers: {
+                    "Content-Type": "application/json",
+                    Accept: "application/json"
+                }
+            })
+            .then(response => response.json())
+            .catch(error => { 
+                console.log(error);
+                return "Unable to process your question. Try again later.";
+            });
+        return chatbotResponse?.response;
+    }
+    catch(error) {
+        console.log(error);
+        return "Unable to process your question. Try again later.";
+    }
+};

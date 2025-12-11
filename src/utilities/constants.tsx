@@ -178,3 +178,9 @@ export const defaultUserSettings = {
 export const defaultChatData = {
     defaultMessage: "How can I assist you today?"
 }
+
+export const defaultChatMsgs = [
+    <div className="chatbot-response">
+        {defaultChatData.defaultMessage}
+    </div>
+]
