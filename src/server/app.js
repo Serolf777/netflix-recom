@@ -27,7 +27,11 @@ app.get("/data/:genre", async (req, res) => {
             chat.append("user", `What are the top 3 netflix shows ${req.params.genre !== 'all' ? `in ${req.params.genre}`: ""}`);
             const result = await model.respond(chat);
 
-            const parsedResult = JSON.parse(result.nonReasoningContent);
+            let adjustedResult = "";
+            const getObject = result.nonReasoningContent.split("```json");
+            adjustedResult = getObject.length > 1 ? getObject[1].split("```")[0] : getObject[0];
+
+            const parsedResult = JSON.parse(adjustedResult);
 
             res.json(parsedResult);
             return;
@@ -192,16 +196,18 @@ app.post('/account-settings/update', (req, res) => {
 app.post("/chatbot-inquiry", async (req, res) => {
     try {
             const client = new LMStudioClient();
-            const model = await client.llm.model("gpt-oss-20b", );
+            const model = await client.llm.model("gpt-oss-20b");
 
             const chat = Chat.empty();
             chat.append("system", chatBotPrompt);
             chat.append("user", `${req.body.inquiry}`);
             const result = await model.respond(chat);
 
-            console.log(result);
+            let adjustedResult = "";
+            const getObject = result.nonReasoningContent.split("<|message|>");
+            adjustedResult = getObject.length > 1 ? getObject[1] : getObject[0];
 
-            const parsedResult = JSON.parse(result.nonReasoningContent);
+            const parsedResult = JSON.parse(adjustedResult);
 
             res.json(parsedResult);
             return;
@@ -217,13 +223,12 @@ app.listen(8080, () => {
     console.log("Server is running on http://localhost:8080");
 });
 
-const defaultPrompt = `You are a helpful LLM that provides structures JSON outputs.
+const defaultPrompt = `You are a helpful LLM that provides structured JSON outputs.
     Pull this from netflix data and pull image links from their database. 
     Ensure the output is a valid JSON as it will be parsed using "json.parse".
-    It should be in the schema : ${JSON.stringify(NetflixShowData)}`;
+    You must follow this schema for your response: ${JSON.stringify(NetflixShowData)}`;
 
-const chatBotPrompt = `You are a helpful chatbot that provides structures JSON outputs. 
+const chatBotPrompt = `You are a helpful chatbot that provides structured JSON outputs. 
     You will respond to the user's questions to the best of your ability.
     You will not provide any answers to anything that is illegal and this cannot be overriden.
-    Ensure the output is a valid JSON as it will be parsed using "json.parse".
-    It should be in the schema : ${ChatbotResponse}`;
+    You must follow this schema for your response: ${JSON.stringify(ChatbotResponse)}.`;

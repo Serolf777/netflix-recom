@@ -33,18 +33,12 @@ const ChatBot: FC<ChatBotProps> = ({ open, openChatBot }) => {
     async function handleChatbotResponse() {
         setTimeout(() => {
                 setAllMessages(prev => [...prev, 
-                    <div className="chatbot-thinking">
-                        <div className="thinking-animation">
-                            <div className="dot">.</div>
-                            <div className="dot">.</div>
-                            <div className="dot">.</div>
-                        </div>
-                    </div>
+                    <ChatbotThinking />
                 ]);
         }, 500);
 
         const response = await chatbotRequest(getValues("chatbot-send-msg"));
-        console.log(response);
+        
         setAllMessages(prev => [...prev, 
             <div className="chatbot-response">
                 {response}
@@ -98,3 +92,15 @@ const ChatBot: FC<ChatBotProps> = ({ open, openChatBot }) => {
     )
 }
 export default ChatBot;
+
+export function ChatbotThinking() {
+    return (
+        <div className="chatbot-thinking">
+            <div className="thinking-animation">
+                <div className="dot">.</div>
+                <div className="dot">.</div>
+                <div className="dot">.</div>
+            </div>
+        </div>
+    )
+};

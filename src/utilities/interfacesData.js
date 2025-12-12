@@ -19,7 +19,7 @@ export const NetflixShowData = {
 export const ChatbotResponse = {
     "type": "object",
     "properties": {
-        "response": { "type": "string" },
+        "response": { "type": "string", "description": "Response to user question" },
     },
     "required": ["response"],
 };
