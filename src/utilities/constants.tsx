@@ -169,6 +169,14 @@ export const rateTheSite = [
     "Terrible! Awful!"
 ];
 
+export const staticUmaList = [
+    "Oguri Cap",
+    "Tamamo Cross",
+    "Super Creek",
+    "El Condor Pasa",
+    "Gold Ship"
+]
+
 export const defaultUserSettings = {
     NumberOfResults: "5",
     DefaultGenre: "All",

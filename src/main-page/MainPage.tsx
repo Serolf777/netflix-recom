@@ -9,11 +9,10 @@ import classNames from "classnames";
 import { isMobile } from "../shared/isMobile.tsx";
 import GenreDropdown from "../shared/genreDropdown.tsx";
 import Footer from "../shared/footer/footer.tsx";
-import { getCookies } from "../utilities/utilityFunctions.tsx";
 import ChatBot from "../shared/chat-bot/chatBot.tsx";
 import { getAccountSettingsRequest } from "../shared/api-calls/apiCalls.tsx";
 import "./mainPage.scss"
-import { LoginContext, LoginContextProvider, LoginContextType } from "../utilities/contexts.tsx";
+import { LoginContext, LoginContextType } from "../utilities/contexts.tsx";
 
 function MainPage() {
   const [ loading, setLoading] = useState(false);

@@ -84,7 +84,7 @@
             opacity: .5;
         }
 
-        .site-header-logo, .site-header-text, .sign-in-button, .slidein-button, .welcome-parent {
+        .site-header-logo, .site-header-text, .sign-in-button, .slidein-button, .welcome-parent, .uma-project-link {
             font-weight: bold;
             color: #F0F8FF;
         }
@@ -98,12 +98,12 @@
             }
         }
 
-        .welcome-parent, .sign-in-button, .slidein-button {
+        .welcome-parent, .sign-in-button, .slidein-button, .uma-project-link {
             margin-left: 0;
             padding: 0 10px 0 10px;
         }
 
-        .sign-in-button, .slidein-button {
+        .sign-in-button, .slidein-button, .uma-project-link {
             &:hover {
                 cursor: pointer;
                 text-decoration: underline;

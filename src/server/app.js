@@ -42,6 +42,8 @@ app.get("/data/:genre", async (req, res) => {
         }
 });
 
+//Plotly
+
 app.get("/userSearch", async (req, res) => {
     try {
             const client = new LMStudioClient();
