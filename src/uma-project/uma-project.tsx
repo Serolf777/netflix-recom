@@ -1,56 +1,36 @@
-import { FC } from 'react';
+import { FC, MouseEventHandler } from 'react';
 import Footer from '../shared/footer/footer.tsx';
 import './uma-project.scss';
 import { FormProvider, useForm } from 'react-hook-form';
 import Dropdown from '../shared/dropdown.tsx';
-import { staticUmaList } from '../utilities/constants.tsx';
-import Spd from "../shared/resources/Spd.png";
-import Stam from "../shared/resources/Stam.png";
-import Pow from "../shared/resources/Pow.png";
-import Guts from "../shared/resources/Guts.png";
-import Wit from "../shared/resources/Wit.png";
-import Pal from "../shared/resources/Pal.png";
+import { staticUmaList, statTypes } from '../utilities/constants.tsx';
+import { useNavigate } from "react-router";
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 const UmaProject: FC = () => {
+    const navigate = useNavigate();
     const methods = useForm();
 
     function optionSelected(option : string) {
         console.log(`option selected: ${option}`);
     };
 
-    const statTypes = [
-        { 
-            type: "Speed",
-            img: Spd
-        },
-        { 
-            type: "Stamina",
-            img: Stam
-        },
-        { 
-            type: "Power",
-            img: Pow
-        },
-        { 
-            type: "Guts",
-            img: Guts
-        },
-        { 
-            type: "Wits",
-            img: Wit
-        },
-        {
-            type: "Pal",
-            img: Pal
-        }
-    ];
+    const handleClick: MouseEventHandler<HTMLDivElement> = (e) => {
+        if (e.preventDefault) e.preventDefault();
 
-    function onClickCardFunction() {
-        console.log("card clicked");
+        if (!e.currentTarget.classList.contains("active")) {
+            e.currentTarget.classList.add('active');
+        } else {
+            e.currentTarget.classList.remove('active');
+        }
     }
 
     return (
         <div className="uma-project-container">
+            <div className="go-back" onClick={() => navigate("/")}>
+                <ArrowBackIcon />
+                Go Back To Home Screen
+            </div>
             <div className="uma-project-page">
                 <div className="uma-project-header">
                     Uma Project
@@ -62,8 +42,16 @@ const UmaProject: FC = () => {
                                 {statTypes.map(statType => 
                                     {
                                         return (
-                                            <div className={`stat-card ${statType.type}`} onClick={onClickCardFunction}>
-                                                <img src={statType.img} height="50px"/>
+                                            <div 
+                                                className={`stat-card ${statType.type}`} 
+                                                onClick={(e) => handleClick(e)}
+                                                id={`${statType.type}-card`}
+                                            >
+                                                <img
+                                                    src={statType.img} 
+                                                    height="50px" 
+                                                    alt={statType.type}
+                                                />
                                             </div>
                                         )
                                     })

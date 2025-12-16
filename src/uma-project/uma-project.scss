@@ -3,6 +3,16 @@
     flex-direction: column;
     height: 100vh;
 
+    .go-back {
+        margin: 12px 12px 0 12px;
+        display: flex;
+
+        &:hover {
+            cursor: pointer;
+            text-decoration: underline;
+        }
+    }
+
     .uma-project-page {
         margin : 12px;
         flex-grow: 1;
@@ -27,6 +37,10 @@
 
                     &:hover {
                         cursor: pointer;
+                    }
+
+                    &.active {
+                        filter: grayscale(100%);
                     }
                 }
             }

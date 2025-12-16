@@ -7,7 +7,6 @@ import { defaultUserSettings, genresList, numberOfResults } from "../utilities/c
 import { FormProvider, useForm } from "react-hook-form";
 import Dropdown from "../shared/dropdown.tsx";
 import { useCallback, useContext, useEffect, useState } from "react";
-import { getCookies } from "../utilities/utilityFunctions.tsx";
 import { getAccountSettingsRequest, saveSettingsRequest } from "../shared/api-calls/apiCalls.tsx";
 import { UserSettings } from "../utilities/interfaces";
 import Header from "../shared/header/header.tsx";

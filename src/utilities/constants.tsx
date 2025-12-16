@@ -1,3 +1,5 @@
+import { Guts, Pal, Pow, Stam, Spd, Wit } from '../shared/resources/index.ts';
+
 export const sampleData = [
     { 
         ranking: 1, 
@@ -191,4 +193,31 @@ export const defaultChatMsgs = [
     <div className="chatbot-response">
         {defaultChatData.defaultMessage}
     </div>
-]
+];
+
+export const statTypes = [
+    { 
+        type: "Speed",
+        img: Spd
+    },
+    { 
+        type: "Stamina",
+        img: Stam
+    },
+    { 
+        type: "Power",
+        img: Pow
+    },
+    { 
+        type: "Guts",
+        img: Guts
+    },
+    { 
+        type: "Wits",
+        img: Wit
+    },
+    {
+        type: "Pal",
+        img: Pal
+    }
+];
