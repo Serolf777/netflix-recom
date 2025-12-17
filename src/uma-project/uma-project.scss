@@ -44,6 +44,98 @@
                     }
                 }
             }
+            .uma-bonuses-container {
+                .uma-bonuses-header {
+                    .bonus-header-msg {
+                        font-weight: bold;
+                    }
+
+                    .bonus-header-helper-note {
+                        font-style: italic;
+                    }
+                }
+
+                .uma-bonuses {
+                    display: flex;
+                    justify-content: center;
+                    flex-direction: row;
+                    margin: 8px;
+
+                    label, input {
+                        margin-left: 4px;
+                    }
+
+                    input {
+                        width: 80px;
+                    }
+                }
+            }
+
+            .stats-container {
+                .stats-container-header {
+                    font-weight: bold;
+                }
+
+                .stats-target {
+                    display: flex;
+                    justify-content: center;
+                    flex-direction: row;
+                    margin: 8px;
+
+                    label, input {
+                        margin-left: 4px;
+                    }
+
+                    input {
+                        margin-left: 4px;
+                        width: 80px;
+                    }
+                }
+            }
+
+            .dropdown-menu {
+                margin: 12px;
+            }
+        }
+
+        .uma-cards-container {
+            border: 1px black solid;
+            border-radius: 4px;
+            background: #E4EBF7;
+            min-height: 50vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+
+            .selected-deck {
+                width: 100%;
+                margin: 8px;
+                border: 1px black solid;
+                border-radius: 4px;
+                min-height: 120px;
+                max-width: 1200px;
+            }
+        }
+
+        .selected-card-type-container {
+            .selected-card-type-header {
+                margin: 8px;
+                font-weight: bold;
+            }
+
+            .selected-card-type {
+                display: grid;
+                grid-template-columns: repeat(5, 1fr);
+
+                .support-card {
+                    margin: 4px;
+
+                    &:hover {
+                        cursor: pointer;
+                    }
+                }
+            }
         }
     }
 }
