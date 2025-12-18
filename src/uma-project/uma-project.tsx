@@ -1,4 +1,4 @@
-import { FC, MouseEventHandler } from 'react';
+import { FC, MouseEventHandler, useState } from 'react';
 import Footer from '../shared/footer/footer.tsx';
 import './uma-project.scss';
 import { FormProvider, useForm } from 'react-hook-form';
@@ -8,10 +8,13 @@ import { useNavigate } from "react-router";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import SupportCards from './supportCards.tsx';
 import cards from './cards/cards.tsx';
+import { RarityFilter } from './cards/cards-interfaces.tsx';
+import { defaultLbFilter } from './constants/constants.tsx';
 
 const UmaProject: FC = () => {
     const navigate = useNavigate();
     const methods = useForm();
+    const [raritiesFilter, setRaritiesFilter] = useState<RarityFilter[]>(defaultLbFilter);
 
     function optionSelected(option : string) {
         console.log(`option selected: ${option}`);
@@ -26,6 +29,24 @@ const UmaProject: FC = () => {
             e.currentTarget.classList.remove('active');
         }
     }
+
+    function rarityCheckBoxHandler(rarity: number, lb: number) {
+        const targetedFilter = raritiesFilter.find((filter) => filter.rarity === rarity);
+
+        if (targetedFilter && targetedFilter.rarity === rarity && !targetedFilter.lb.includes(lb)) {
+            targetedFilter.lb.push(lb);
+        } else if (targetedFilter && targetedFilter.rarity === rarity) {
+            targetedFilter.lb = targetedFilter.lb.filter(number => number !== lb);
+        }
+
+        setRaritiesFilter(raritiesFilter.map(filter => {
+            if (targetedFilter && filter.rarity === rarity) {
+                return {...filter, lb: targetedFilter.lb } 
+            } else {
+                return filter;
+            }
+        }))
+    };
 
     return (
         <div className="uma-project-container">
@@ -51,6 +72,7 @@ const UmaProject: FC = () => {
                                                 className={`stat-card ${statType.type}`} 
                                                 onClick={(e) => handleClick(e)}
                                                 id={`${statType.type}-card`}
+                                                key={`${statType.type}-card`}
                                             >
                                                 <img
                                                     src={statType.img} 
@@ -128,6 +150,152 @@ const UmaProject: FC = () => {
                             dropdownOptions={staticUmaList}
                             onChangeHandler={optionSelected}
                         />
+                        <div className="card-filters-container">
+                            <div className="ssr-filter-container">
+                                <div className="ssr-filter-header">
+                                    SSR
+                                </div>
+                                <div className="checkbox-container">
+                                    <div className="lb">
+                                        ◆◆◆◆
+                                    </div>
+                                    <div className="non-lb">
+                                    </div>
+                                    <input type="checkbox" defaultChecked={true} onClick={() => rarityCheckBoxHandler(3, 4)} />
+                                </div>
+                                <div className="checkbox-container">
+                                    <div className="lb">
+                                        ◆◆◆
+                                    </div>
+                                    <div className="non-lb">
+                                        ◆
+                                    </div>
+                                    <input type="checkbox" defaultChecked={true} onClick={() => rarityCheckBoxHandler(3, 3)} />
+                                </div>
+                                <div className="checkbox-container">
+                                    <div className="lb">
+                                        ◆◆
+                                    </div>
+                                    <div className="non-lb">
+                                        ◆◆
+                                    </div>
+                                    <input type="checkbox" defaultChecked={true} onClick={() => rarityCheckBoxHandler(3, 2)} />
+                                </div>
+                                <div className="checkbox-container">
+                                    <div className="lb">
+                                        ◆
+                                    </div>
+                                    <div className="non-lb">
+                                        ◆◆◆
+                                    </div>
+                                    <input type="checkbox" defaultChecked={true} onClick={() => rarityCheckBoxHandler(3, 1)} />
+                                </div>
+                                <div className="checkbox-container">
+                                    <div className="lb">
+                                    </div>
+                                    <div className="non-lb">
+                                        ◆◆◆◆
+                                    </div>
+                                    <input type="checkbox" defaultChecked={true} onClick={() => rarityCheckBoxHandler(3, 0)} />
+                                </div>
+                            </div>
+                            <div className="sr-filter-container">
+                                <div className="sr-filter-header">
+                                    SR
+                                </div>
+                                <div className="checkbox-container">
+                                    <div className="lb">
+                                        ◆◆◆◆
+                                    </div>
+                                    <div className="non-lb">
+                                    </div>
+                                    <input type="checkbox" defaultChecked={true} onClick={() => rarityCheckBoxHandler(2, 4)} />
+                                </div>
+                                <div className="checkbox-container">
+                                    <div className="lb">
+                                        ◆◆◆
+                                    </div>
+                                    <div className="non-lb">
+                                        ◆
+                                    </div>
+                                    <input type="checkbox" defaultChecked={true} onClick={() => rarityCheckBoxHandler(2, 3)} />
+                                </div>
+                                <div className="checkbox-container">
+                                    <div className="lb">
+                                        ◆◆
+                                    </div>
+                                    <div className="non-lb">
+                                        ◆◆
+                                    </div>
+                                    <input type="checkbox" defaultChecked={true} onClick={() => rarityCheckBoxHandler(2, 2)} />
+                                </div>
+                                <div className="checkbox-container">
+                                    <div className="lb">
+                                        ◆
+                                    </div>
+                                    <div className="non-lb">
+                                        ◆◆◆
+                                    </div>
+                                    <input type="checkbox" defaultChecked={true} onClick={() => rarityCheckBoxHandler(2, 1)} />
+                                </div>
+                                <div className="checkbox-container">
+                                    <div className="lb">
+                                    </div>
+                                    <div className="non-lb">
+                                        ◆◆◆◆
+                                    </div>
+                                    <input type="checkbox" defaultChecked={true} onClick={() => rarityCheckBoxHandler(2, 0)} />
+                                </div>
+                            </div>
+                            <div className="r-filter-container">
+                                <div className="r-filter-header">
+                                    R
+                                </div>
+                                <div className="checkbox-container">
+                                    <div className="lb">
+                                        ◆◆◆◆
+                                    </div>
+                                    <div className="non-lb">
+                                    </div>
+                                    <input type="checkbox" defaultChecked={true} onClick={() => rarityCheckBoxHandler(1, 4)} />
+                                </div>
+                                <div className="checkbox-container">
+                                    <div className="lb">
+                                        ◆◆◆
+                                    </div>
+                                    <div className="non-lb">
+                                        ◆
+                                    </div>
+                                    <input type="checkbox" defaultChecked={true} onClick={() => rarityCheckBoxHandler(1, 3)} />
+                                </div>
+                                <div className="checkbox-container">
+                                    <div className="lb">
+                                        ◆◆
+                                    </div>
+                                    <div className="non-lb">
+                                        ◆◆
+                                    </div>
+                                    <input type="checkbox" defaultChecked={true} onClick={() => rarityCheckBoxHandler(1, 2)} />
+                                </div>
+                                <div className="checkbox-container">
+                                    <div className="lb">
+                                        ◆
+                                    </div>
+                                    <div className="non-lb">
+                                        ◆◆◆
+                                    </div>
+                                    <input type="checkbox" defaultChecked={true} onClick={() => rarityCheckBoxHandler(1, 1)} />
+                                </div>
+                                <div className="checkbox-container">
+                                    <div className="lb">
+                                    </div>
+                                    <div className="non-lb">
+                                        ◆◆◆◆
+                                    </div>
+                                    <input type="checkbox" defaultChecked={true} onClick={() => rarityCheckBoxHandler(1, 0)} />
+                                </div>
+                            </div>
+                        </div>
                         <button type="submit" value="submit"> 
                             Submit 
                         </button>
@@ -146,7 +314,12 @@ const UmaProject: FC = () => {
                         <div className="selected-card-type">
                             {cards.map((card) =>
                                 {
-                                    return <SupportCards imgUrl={`/cardImages/support_card_s_${card.id}.png`} alt={`${card.id}`} />
+                                    return (
+                                    <SupportCards 
+                                        imgUrl={`/cardImages/support_card_s_${card.id}.png`} 
+                                        alt={`${card.id}`} 
+                                        key={`${card.id}-${card.limit_break}`}  
+                                    />)
                                 })
                             }
                         </div>

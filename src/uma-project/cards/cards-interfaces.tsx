@@ -1,4 +1,4 @@
-export interface supportCards {
+export interface SupportCards {
     id: string;
     type: number;
     group: boolean;
@@ -66,3 +66,8 @@ export const supportCardProperties = {
         shorthand: "HF"
     },
 };
+
+export interface RarityFilter {
+    rarity: number;
+    lb: number[];
+}

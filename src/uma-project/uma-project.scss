@@ -96,6 +96,30 @@
             .dropdown-menu {
                 margin: 12px;
             }
+
+            .card-filters-container {
+                margin: 8px auto 8px auto;
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                width: 600px;
+
+                .ssr-filter-header, .sr-filter-header, .r-filter-header {
+                    font-weight: bold;
+                }
+
+                .checkbox-container {
+                    display: flex;
+                    justify-content: center;
+
+                    .lb {
+                        color: aqua;
+                    }
+
+                    .non-lb {
+                        color: gray;
+                    }
+                }
+            }
         }
 
         .uma-cards-container {
