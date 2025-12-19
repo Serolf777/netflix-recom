@@ -1,4 +1,4 @@
-import { FC, MouseEventHandler, useState } from 'react';
+import { FC, MouseEventHandler, MouseEvent, useState, useMemo } from 'react';
 import Footer from '../shared/footer/footer.tsx';
 import './uma-project.scss';
 import { FormProvider, useForm } from 'react-hook-form';
@@ -15,20 +15,23 @@ const UmaProject: FC = () => {
     const navigate = useNavigate();
     const methods = useForm();
     const [raritiesFilter, setRaritiesFilter] = useState<RarityFilter[]>(defaultLbFilter);
+    const [statSelected, setStatSelected] = useState<number | null>(0);
 
     function optionSelected(option : string) {
         console.log(`option selected: ${option}`);
     };
 
-    const handleClick: MouseEventHandler<HTMLDivElement> = (e) => {
-        if (e.preventDefault) e.preventDefault();
+    function statCardClicked(e: MouseEvent<HTMLDivElement>, statType: number) {
+        e.preventDefault();
 
         if (!e.currentTarget.classList.contains("active")) {
             e.currentTarget.classList.add('active');
+            setStatSelected(statType);
         } else {
             e.currentTarget.classList.remove('active');
+            setStatSelected(null);
         }
-    }
+    };
 
     function rarityCheckBoxHandler(rarity: number, lb: number) {
         const targetedFilter = raritiesFilter.find((filter) => filter.rarity === rarity);
@@ -47,6 +50,23 @@ const UmaProject: FC = () => {
             }
         }))
     };
+
+    const filteredCards = useMemo(() => cards.filter((card) => {
+        if (card.rarity == 1 && raritiesFilter[0].lb.includes(card.limit_break) && card.type == statSelected) {
+            return true;
+        } 
+        else if (card.rarity == 2 && raritiesFilter[1].lb.includes(card.limit_break) && card.type == statSelected) {
+            return true;
+        }
+        else if (card.rarity == 3 && raritiesFilter[2].lb.includes(card.limit_break) && card.type == statSelected) {
+            return true;
+        }
+        return false;
+    }), [raritiesFilter, statSelected]);
+
+    function supportCardClicked() {
+        console.log('clicked');
+    }
 
     return (
         <div className="uma-project-container">
@@ -69,8 +89,8 @@ const UmaProject: FC = () => {
                                     {
                                         return (
                                             <div 
-                                                className={`stat-card ${statType.type}`} 
-                                                onClick={(e) => handleClick(e)}
+                                                className={`stat-card ${statType.type} ${statType.typeVal == statSelected  ? "active" : "" }`} 
+                                                onClick={(e) => statCardClicked(e, statType.typeVal)}
                                                 id={`${statType.type}-card`}
                                                 key={`${statType.type}-card`}
                                             >
@@ -94,26 +114,17 @@ const UmaProject: FC = () => {
                                     </div>
                                 </div>
                                     <div className="uma-bonuses">
-                                        <label>
-                                            Spd
-                                        </label>
-                                        <input type="number" defaultValue="1.06" min="1.00" max="1.30" step=".01" className="uma-bonus-spd" />
-                                        <label>
-                                            Stam
-                                        </label>
-                                        <input type="number" defaultValue="1.06" min="1.00" max="1.30" step=".01" className="uma-bonus-stam" />
-                                        <label>
-                                            Pow
-                                        </label>
-                                        <input type="number" defaultValue="1.06" min="1.00" max="1.30" step=".01" className="uma-bonus-pow" />
-                                        <label>
-                                            Guts
-                                        </label>
-                                        <input type="number" defaultValue="1.06" min="1.00" max="1.30" step=".01" className="uma-bonus-guts" />
-                                        <label>
-                                            Wit
-                                        </label>
-                                        <input type="number" defaultValue="1.06" min="1.00" max="1.30" step=".01" className="uma-bonus-wit" />
+                                        {statTypes.map(statType => 
+                                            {
+                                                return (
+                                                    <div key={`uma-bonus-${statType.type}`}>
+                                                        <label>
+                                                            {statType.type}
+                                                        </label>
+                                                        <input type="number" defaultValue="1.06" min="1.00" max="1.30" step=".01" className={`uma-bonus-${statType.type}`} />
+                                                    </div>)
+                                            }
+                                        )}
                                     </div>
                             </div>
 
@@ -122,26 +133,18 @@ const UmaProject: FC = () => {
                                     Target Stats
                                 </div>
                                 <div className="stats-target">
-                                    <label>
-                                        Spd
-                                    </label>
-                                    <input type="number" defaultValue="600" min="0" max="1200" className="searchbar" />
-                                    <label>
-                                        Stam
-                                    </label>
-                                    <input type="number" defaultValue="600" min="0" max="1200" className="searchbar" />
-                                    <label>
-                                        Pow
-                                    </label>
-                                    <input type="number" defaultValue="600" min="0" max="1200" className="searchbar" />
-                                    <label>
-                                        Guts
-                                    </label>
-                                    <input type="number" defaultValue="600" min="0" max="1200" className="searchbar" />
-                                    <label>
-                                        Wit
-                                    </label>
-                                    <input type="number" defaultValue="600" min="0" max="1200" className="searchbar" />
+                                    {statTypes.map(statType => 
+                                        {
+                                            return (
+                                                <div key={`stats-target-${statType.type}`}>
+                                                    <label>
+                                                        {statType.type}
+                                                    </label>
+                                                    <input type="number" defaultValue="600" min="0" max="1200" className={`uma-target-${statType.type}`} />
+                                                </div>
+                                            )
+                                        }
+                                    )}
                                 </div>
                             </div>
                         </div>
@@ -312,13 +315,16 @@ const UmaProject: FC = () => {
                             Select a Support Card To Add to your deck
                         </div>
                         <div className="selected-card-type">
-                            {cards.map((card) =>
+                            {filteredCards.map((card) =>
                                 {
                                     return (
                                     <SupportCards 
-                                        imgUrl={`/cardImages/support_card_s_${card.id}.png`} 
-                                        alt={`${card.id}`} 
-                                        key={`${card.id}-${card.limit_break}`}  
+                                        imgUrl={`/cardImages/support_card_s_${card.id}.png`}
+                                        limitBreak={card.limit_break}
+                                        statType={card.type}
+                                        alt={`${card.char_name}`}
+                                        cardClicked={supportCardClicked}
+                                        key={`${card.id}-${card.limit_break}`}
                                     />)
                                 })
                             }

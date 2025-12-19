@@ -154,9 +154,35 @@
 
                 .support-card {
                     margin: 4px;
+                    position: relative;
 
                     &:hover {
                         cursor: pointer;
+                    }
+
+                    .limit-break, .stat-type {
+                        position: absolute;
+                    }
+
+                    .limit-break {
+                        left: 8px;
+                        bottom: 8px;
+                        display: flex;
+                        flex-direction: row;
+
+                        .lb {
+                            color: aqua;
+                        }
+
+                        .non-lb {
+                            color: gray;
+                        }
+                        
+                    }
+
+                    .stat-type {
+                        top: 4px;
+                        right: 4px;
                     }
                 }
             }

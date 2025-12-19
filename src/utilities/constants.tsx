@@ -195,29 +195,54 @@ export const defaultChatMsgs = [
     </div>
 ];
 
+export const Stats = {
+    Spd: "Speed",
+    Stam: "Stamina",
+    Pow: "Power",
+    Guts: "Guts",
+    Wit: "Wit",
+    Pal: "Pal"
+};
+
+export const NumberToStat = {
+    0: "Spd",
+    1: "Stam",
+    2: "Pow",
+    3: "Guts",
+    4: "Wit",
+    5: "",
+    6: "Pal"
+};
+
 export const statTypes = [
     { 
-        type: "Speed",
-        img: Spd
+        type: Stats.Spd,
+        img: Spd,
+        typeVal: 0
     },
     { 
-        type: "Stamina",
-        img: Stam
+        type: Stats.Stam,
+        img: Stam,
+        typeVal: 1
     },
     { 
-        type: "Power",
-        img: Pow
+        type: Stats.Pow,
+        img: Pow,
+        typeVal: 2
     },
     { 
-        type: "Guts",
-        img: Guts
+        type: Stats.Guts,
+        img: Guts,
+        typeVal: 3
     },
     { 
-        type: "Wits",
-        img: Wit
+        type: Stats.Wit,
+        img: Wit,
+        typeVal: 4
     },
     {
-        type: "Pal",
-        img: Pal
+        type: Stats.Pal,
+        img: Pal,
+        typeVal: 6
     }
 ];
