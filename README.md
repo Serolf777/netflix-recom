@@ -6,6 +6,8 @@ Custom made components with the goal of reusability use for the frontend.
 
 Working login/registration that saves credentials to SQL server; after logging in cookies user with expiration of 24 hours.
 
+Working chatbot leveraging LLM to provide responses.
+
 Uses npm front end and node back end.
 
 The LLM leveraged comes from LM studio OpenAi's gpt-oss 20B and the server expects to be reachable at "http://127.0.0.1:1234".
