@@ -1,5 +1,3 @@
-import { Guts, Pal, Pow, Stam, Spd, Wit } from '../shared/resources/index.ts';
-
 export const sampleData = [
     { 
         ranking: 1, 
@@ -193,56 +191,4 @@ export const defaultChatMsgs = [
     <div className="chatbot-response" key={`chatBot-response 1`}>
         {defaultChatData.defaultMessage}
     </div>
-];
-
-export const Stats = {
-    Spd: "Speed",
-    Stam: "Stamina",
-    Pow: "Power",
-    Guts: "Guts",
-    Wit: "Wit",
-    Pal: "Pal"
-};
-
-export const NumberToStat = {
-    0: "Spd",
-    1: "Stam",
-    2: "Pow",
-    3: "Guts",
-    4: "Wit",
-    5: "",
-    6: "Pal"
-};
-
-export const statTypes = [
-    { 
-        type: Stats.Spd,
-        img: Spd,
-        typeVal: 0
-    },
-    { 
-        type: Stats.Stam,
-        img: Stam,
-        typeVal: 1
-    },
-    { 
-        type: Stats.Pow,
-        img: Pow,
-        typeVal: 2
-    },
-    { 
-        type: Stats.Guts,
-        img: Guts,
-        typeVal: 3
-    },
-    { 
-        type: Stats.Wit,
-        img: Wit,
-        typeVal: 4
-    },
-    {
-        type: Stats.Pal,
-        img: Pal,
-        typeVal: 6
-    }
 ];

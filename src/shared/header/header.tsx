@@ -97,12 +97,6 @@ const Header: FC<HeaderProps> = ({ setModalOpen, showSlideinButton, setMenuOpen 
                 Welcome to Netflix recommendations!
             </div>
 
-            <div className="uma-project-link" onClick={() => navigate("/uma-project")}>
-                Uma Project
-            </div>
-
-            <span className="divider" />
-
             {showSlideinButton &&
                 <div className="slidein-button" onClick={() => setShowSlidein(true)}>
                     Slidein
