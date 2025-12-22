@@ -1,4 +1,4 @@
-import { FC, MouseEventHandler, MouseEvent, useState, useMemo } from 'react';
+import { FC, MouseEvent, useState, useMemo } from 'react';
 import Footer from '../shared/footer/footer.tsx';
 import './uma-project.scss';
 import { FormProvider, useForm } from 'react-hook-form';
@@ -10,12 +10,14 @@ import SupportCards from './supportCards.tsx';
 import cards from './cards/cards.tsx';
 import { RarityFilter } from './cards/cards-interfaces.tsx';
 import { defaultLbFilter } from './constants/constants.tsx';
+import { SupportCard } from './cards/cards-interfaces.tsx';
 
 const UmaProject: FC = () => {
     const navigate = useNavigate();
     const methods = useForm();
     const [raritiesFilter, setRaritiesFilter] = useState<RarityFilter[]>(defaultLbFilter);
     const [statSelected, setStatSelected] = useState<number | null>(0);
+    const [selectedCards, setSelectedCards] = useState<SupportCard[]>([]);
 
     function optionSelected(option : string) {
         console.log(`option selected: ${option}`);
@@ -52,21 +54,32 @@ const UmaProject: FC = () => {
     };
 
     const filteredCards = useMemo(() => cards.filter((card) => {
-        if (card.rarity == 1 && raritiesFilter[0].lb.includes(card.limit_break) && card.type == statSelected) {
+        const currentlyInDeck = selectedCards.some(currentCard => currentCard.id === card.id);
+
+        if (card.rarity == 1 && raritiesFilter[0].lb.includes(card.limit_break) && card.type == statSelected && !currentlyInDeck) {
             return true;
         } 
-        else if (card.rarity == 2 && raritiesFilter[1].lb.includes(card.limit_break) && card.type == statSelected) {
+        else if (card.rarity == 2 && raritiesFilter[1].lb.includes(card.limit_break) && card.type == statSelected && !currentlyInDeck) {
             return true;
         }
-        else if (card.rarity == 3 && raritiesFilter[2].lb.includes(card.limit_break) && card.type == statSelected) {
+        else if (card.rarity == 3 && raritiesFilter[2].lb.includes(card.limit_break) && card.type == statSelected && !currentlyInDeck) {
             return true;
         }
         return false;
-    }), [raritiesFilter, statSelected]);
+    }), [raritiesFilter, statSelected, selectedCards]);
 
-    function supportCardClicked() {
-        console.log('clicked');
-    }
+    function supportCardAdd(card: SupportCard) {
+        if (selectedCards.length < 6) {
+            setSelectedCards([...selectedCards,
+                card
+            ])
+        };
+    };
+
+    function supportCardRemove(card: SupportCard) {
+        const updatedCards = selectedCards.filter(currentCard => currentCard.id !== card.id);
+        setSelectedCards(updatedCards);
+    };
 
     return (
         <div className="uma-project-container">
@@ -305,9 +318,24 @@ const UmaProject: FC = () => {
                     </form>
                 </FormProvider>
                 <div className="uma-cards-container">
-                    <div className="selected-deck">
-                        <div>
-                            Currently selected deck area.
+                    <div className="selected-deck-container">
+                        <div className="selected-deck-header">
+                            Currently Selected Deck
+                        </div>
+                        <div className="selected-deck">
+                            {selectedCards.map((card) =>
+                                {
+                                    return (
+                                    <SupportCards 
+                                        imgUrl={`/cardImages/support_card_s_${card.id}.png`}
+                                        limitBreak={card.limit_break}
+                                        statType={card.type}
+                                        alt={`${card.char_name}`}
+                                        cardClicked={() => supportCardRemove(card)}
+                                        key={`${card.id}-${card.limit_break}`}
+                                    />)
+                                })
+                            }
                         </div>
                     </div>
                     <div className="selected-card-type-container">
@@ -323,7 +351,7 @@ const UmaProject: FC = () => {
                                         limitBreak={card.limit_break}
                                         statType={card.type}
                                         alt={`${card.char_name}`}
-                                        cardClicked={supportCardClicked}
+                                        cardClicked={() => supportCardAdd(card)}
                                         key={`${card.id}-${card.limit_break}`}
                                     />)
                                 })

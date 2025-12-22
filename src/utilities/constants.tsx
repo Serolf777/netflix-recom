@@ -190,7 +190,7 @@ export const defaultChatData = {
 }
 
 export const defaultChatMsgs = [
-    <div className="chatbot-response">
+    <div className="chatbot-response" key={`chatBot-response 1`}>
         {defaultChatData.defaultMessage}
     </div>
 ];

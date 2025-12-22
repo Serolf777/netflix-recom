@@ -132,13 +132,28 @@
             align-items: center;
 
 
-            .selected-deck {
+            .selected-deck-container {
                 width: 100%;
                 margin: 8px;
                 border: 1px black solid;
                 border-radius: 4px;
                 min-height: 120px;
                 max-width: 1200px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+
+                .selected-deck-header {
+                    font-weight: bold;
+                    align-self: center;
+                }
+
+                .selected-deck {
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+                    justify-content: center;
+                }
             }
         }
 
@@ -151,41 +166,40 @@
             .selected-card-type {
                 display: grid;
                 grid-template-columns: repeat(5, 1fr);
-
-                .support-card {
-                    margin: 4px;
-                    position: relative;
-
-                    &:hover {
-                        cursor: pointer;
-                    }
-
-                    .limit-break, .stat-type {
-                        position: absolute;
-                    }
-
-                    .limit-break {
-                        left: 8px;
-                        bottom: 8px;
-                        display: flex;
-                        flex-direction: row;
-
-                        .lb {
-                            color: aqua;
-                        }
-
-                        .non-lb {
-                            color: gray;
-                        }
-                        
-                    }
-
-                    .stat-type {
-                        top: 4px;
-                        right: 4px;
-                    }
-                }
             }
         }
+    }
+}
+.support-card {
+    margin: 4px;
+    position: relative;
+
+    &:hover {
+        cursor: pointer;
+    }
+
+    .limit-break, .stat-type {
+        position: absolute;
+    }
+
+    .limit-break {
+        left: 8px;
+        bottom: 8px;
+        display: flex;
+        flex-direction: row;
+
+        .lb {
+            color: aqua;
+        }
+
+        .non-lb {
+            color: gray;
+        }
+        
+    }
+
+    .stat-type {
+        top: 4px;
+        right: 4px;
     }
 }

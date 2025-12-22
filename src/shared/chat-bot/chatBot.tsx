@@ -1,5 +1,5 @@
 import "./chatBot.scss"
-import { FC, useState } from "react";
+import { FC, useState, useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import CloseIcon from '@mui/icons-material/Close';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
@@ -16,13 +16,15 @@ const ChatBot: FC<ChatBotProps> = ({ open, openChatBot }) => {
     const [allMessages, setAllMessages] = useState(defaultChatMsgs)
     const methods = useForm();
     const { register, getValues, reset } = methods;
+    const [chatBotLoading, setChatBotLoading] = useState<boolean>(false);
+    const [chatBotResponse, setChatBotResponse] = useState<string>("");
 
     function submitChatbotInquiry() {
         const chatMsg = getValues("chatbot-send-msg");
 
         setUserMessages([...userMessages, chatMsg]);
         setAllMessages(prev => [...prev, 
-            <div className="chatbot-inquiry">
+            <div className="chatbot-inquiry" key={`chatBot-inquiry ${allMessages.length + 1}`}>
                 {chatMsg}
             </div>
         ]);
@@ -31,20 +33,37 @@ const ChatBot: FC<ChatBotProps> = ({ open, openChatBot }) => {
     };
 
     async function handleChatbotResponse() {
-        setTimeout(() => {
-                setAllMessages(prev => [...prev, 
-                    <ChatbotThinking />
-                ]);
-        }, 500);
-
-        const response = await chatbotRequest(getValues("chatbot-send-msg"));
-        
-        setAllMessages(prev => [...prev, 
-            <div className="chatbot-response">
-                {response}
-            </div>
-        ]);
+        setChatBotLoading(true);
+        const response = await chatbotRequest(getValues("chatbot-send-msg"))
+            .finally(() => setChatBotLoading(false))
+            .catch((error) => {
+                console.log(error);
+            });
+        setChatBotResponse(response);
     };
+
+    useEffect(() => {
+        if (chatBotLoading) {
+            setTimeout(() => {
+                setAllMessages(prev => [...prev, 
+                    <ChatbotThinking key={`chatBot-thinking ${allMessages.length + 1}`} />
+                ]);
+            }, 500);
+        } 
+        else if (chatBotResponse && !chatBotLoading) {
+            const updatedResponses = [...allMessages]
+
+            updatedResponses.pop();
+
+            updatedResponses?.push(
+                <div className="chatbot-response" key={`chatBot-response ${allMessages.length + 1}`}>
+                    {chatBotResponse}
+                </div>
+            );
+
+            setAllMessages(updatedResponses);
+        }
+    }, [chatBotLoading, chatBotResponse])
 
     return (
         <div className="chatbot-container">

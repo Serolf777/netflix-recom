@@ -1,5 +1,5 @@
-export interface SupportCards {
-    id: string;
+export interface SupportCard {
+    id: number;
     type: number;
     group: boolean;
     rarity: number;
@@ -9,7 +9,7 @@ export interface SupportCards {
     stat_bonus: number[];
     race_bonus: number;
     sb: number;
-    speciality_rate: number;
+    specialty_rate: number;
     unique_specialty: number;
     offstat_appearance_denominator: number;
     tb: number;
@@ -19,7 +19,6 @@ export interface SupportCards {
     fs_stats: number[];
     fs_training: number;
     fs_motivation: number;
-    fs_speciality: number;
     fs_specialty: number;
     fs_ramp: number[];
     fs_energy: number;
