@@ -2,18 +2,18 @@ import "./header.scss";
 // @ts-ignore
 import companyLogo from "../resources/companyLogo.png";
 import { useState, FC, useEffect, useContext } from "react";
-import HeaderDropdown from "./headerDropdown.tsx";
-import { isMobile } from "../isMobile.tsx";
-import { getCookies } from "../../utilities/utilityFunctions.tsx";
+import HeaderDropdown from "./headerDropdown";
+import { isMobile } from "../isMobile";
+import { getCookies } from "../../utilities/utilityFunctions";
 import { useNavigate } from 'react-router';
 import classNames from "classnames";
-import Modal from "../modals/modal.tsx";
-import Signin from "../signin.tsx";
-import Register from "../register.tsx";
-import SlideinModal from "../modals/slideinModal.tsx";
-import Dropdown from "../dropdown.tsx";
-import { coolPokemonList, genresList, rateTheSite } from "../../utilities/constants.tsx";
-import { LoginContext, LoginContextType } from "../../utilities/contexts.tsx";
+import Modal from "../modals/modal";
+import Signin from "../signin";
+import Register from "../register";
+import SlideinModal from "../modals/slideinModal";
+import Dropdown from "../dropdown";
+import { coolPokemonList, genresList, rateTheSite } from "../../utilities/constants";
+import { LoginContext, LoginContextType } from "../../utilities/contexts";
 
 export interface HeaderProps {
     setModalOpen: (toggle: boolean) => void;

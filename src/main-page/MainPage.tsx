@@ -1,18 +1,19 @@
 import { useCallback, useContext, useEffect, useMemo, useState } from "react";
 import { FormProvider, useForm } from 'react-hook-form';
-import NetflixShow from "./netflixShows/netflixShow.tsx";
-import { LanguageModel, LanguageModelSearch } from "../shared/api-calls/LanguageModel.tsx";
-import { sampleData, genresList, defaultUserSettings } from "../utilities/constants.tsx";
+import NetflixShow from "./netflixShows/netflixShow";
+import { LanguageModel, LanguageModelSearch } from "../shared/api-calls/LanguageModel";
+import { sampleData, genresList, defaultUserSettings } from "../utilities/constants";
 import { NetflixShowData, UserSettings } from "../utilities/interfaces";
-import Header from "../shared/header/header.tsx";
+import Header from "../shared/header/header";
 import classNames from "classnames";
-import { isMobile } from "../shared/isMobile.tsx";
-import GenreDropdown from "../shared/genreDropdown.tsx";
-import Footer from "../shared/footer/footer.tsx";
-import ChatBot from "../shared/chat-bot/chatBot.tsx";
-import { getAccountSettingsRequest } from "../shared/api-calls/apiCalls.tsx";
+import { isMobile } from "../shared/isMobile";
+import GenreDropdown from "../shared/genreDropdown";
+import Footer from "../shared/footer/footer";
+import ChatBot from "../shared/chat-bot/chatBot";
+import { getAccountSettingsRequest } from "../shared/api-calls/apiCalls";
 import "./mainPage.scss"
-import { LoginContext, LoginContextType } from "../utilities/contexts.tsx";
+import { LoginContext, LoginContextType } from "../utilities/contexts";
+import MainPageMobile from "./MainPageMobile";
 
 function MainPage() {
   const [ loading, setLoading] = useState(false);
@@ -97,6 +98,10 @@ function MainPage() {
 
     return filteredShowsArray;
   }, [showsArray, accountSettings]);
+
+  if (mobile) {
+     return <MainPageMobile />
+  }
 
   return (
     <div className="main-page">

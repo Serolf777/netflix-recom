@@ -1,16 +1,16 @@
 import { useNavigate } from "react-router";
-import Footer from "../shared/footer/footer.tsx";
+import Footer from "../shared/footer/footer";
 import "./accountPage.scss"
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import GenreDropdown from "../shared/genreDropdown.tsx";
-import { defaultUserSettings, genresList, numberOfResults } from "../utilities/constants.tsx";
+import GenreDropdown from "../shared/genreDropdown";
+import { defaultUserSettings, genresList, numberOfResults } from "../utilities/constants";
 import { FormProvider, useForm } from "react-hook-form";
-import Dropdown from "../shared/dropdown.tsx";
+import Dropdown from "../shared/dropdown";
 import { useCallback, useContext, useEffect, useState } from "react";
-import { getAccountSettingsRequest, saveSettingsRequest } from "../shared/api-calls/apiCalls.tsx";
+import { getAccountSettingsRequest, saveSettingsRequest } from "../shared/api-calls/apiCalls";
 import { UserSettings } from "../utilities/interfaces";
-import Header from "../shared/header/header.tsx";
-import { LoginContext, LoginContextType } from "../utilities/contexts.tsx";
+import Header from "../shared/header/header";
+import { LoginContext, LoginContextType } from "../utilities/contexts";
 
 function AccountPage () {
     const navigate = useNavigate();

@@ -1,7 +1,7 @@
 import "./modals.scss";
 import { FC, useEffect, ReactNode } from "react";
 import CloseIcon from '@mui/icons-material/Close'
-import { isMobile } from "../isMobile.tsx";
+import { isMobile } from "../isMobile";
 import classNames from "classnames";
 
 export interface ModalProps {

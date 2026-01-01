@@ -1,10 +1,10 @@
 import { FC, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { SignInValidationSchema } from './validationSchema.tsx';
+import { SignInValidationSchema } from './validationSchema';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { expireTime } from '../utilities/utilityFunctions.tsx';
+import { expireTime } from '../utilities/utilityFunctions';
 import "./shared.scss";
-import { signInRequest } from './api-calls/apiCalls.tsx';
+import { signInRequest } from './api-calls/apiCalls';
 
 interface SigninProps {
     submitClicked: () => void;

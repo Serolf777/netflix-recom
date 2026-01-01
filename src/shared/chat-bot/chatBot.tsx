@@ -3,8 +3,8 @@ import { FC, useState, useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import CloseIcon from '@mui/icons-material/Close';
 import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
-import { defaultChatMsgs } from "../../utilities/constants.tsx";
-import { chatbotRequest } from "../api-calls/apiCalls.tsx";
+import { defaultChatMsgs } from "../../utilities/constants";
+import { chatbotRequest } from "../api-calls/apiCalls";
 
 export interface ChatBotProps {
     open: boolean;

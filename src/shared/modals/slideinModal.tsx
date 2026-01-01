@@ -2,7 +2,7 @@ import "./modals.scss";
 import {  useEffect, useRef, FC, ReactNode } from "react";
 import CloseIcon from '@mui/icons-material/Close'
 import classNames from "classnames";
-import { isMobile } from "../isMobile.tsx";
+import { isMobile } from "../isMobile";
 
 export interface SlideinModalProps {
     slideinOpen: boolean;

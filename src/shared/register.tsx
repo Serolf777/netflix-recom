@@ -1,9 +1,9 @@
 import { FC, useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { SignInValidationSchema } from './validationSchema.tsx';
+import { SignInValidationSchema } from './validationSchema';
 import { yupResolver } from '@hookform/resolvers/yup';
 import "./shared.scss";
-import { createUsersRequest } from './api-calls/apiCalls.tsx';
+import { createUsersRequest } from './api-calls/apiCalls';
 
 interface RegisterProps {
     toggleSignin: () => void;
