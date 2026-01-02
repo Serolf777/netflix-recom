@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { type NetflixShowData } from "../../utilities/interfaces";
-import "../mainPage.scss";
+import "./netflixShow.scss";
 
 interface NetflixShowProps {
     showData: NetflixShowData;

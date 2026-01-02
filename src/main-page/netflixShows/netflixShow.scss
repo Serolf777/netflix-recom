@@ -1,0 +1,35 @@
+.netflixShow {
+    color: black;
+    display: flex;
+    flex: 1 0 50%;
+    max-width: 500px;
+    margin: 4px 0 4px 0;
+
+    .show-image-container {
+        flex: 1;
+    }
+
+    .show-details {
+        flex: 1;
+        text-align: left;
+
+        .show-name {
+            font-weight: bold;
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .show-description, .show-genre, .show-rating, .show-link {
+            margin-bottom: 5px;
+        }
+
+    }
+    .show-image {
+        float: right;
+        margin-right: 30px;
+        max-height: 250px;
+        max-width: 250px;
+        height: auto;
+        width: auto;
+    }
+}
