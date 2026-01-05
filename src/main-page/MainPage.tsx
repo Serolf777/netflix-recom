@@ -11,7 +11,7 @@ import GenreDropdown from "../shared/genreDropdown";
 import Footer from "../shared/footer/footer";
 import ChatBot from "../shared/chat-bot/chatBot";
 import { getAccountSettingsRequest } from "../shared/api-calls/apiCalls";
-import "./mainPage.scss"
+import "./styles/mainPage.scss"
 import { LoginContext, LoginContextType } from "../utilities/contexts";
 import MainPageMobile from "./MainPageMobile";
 

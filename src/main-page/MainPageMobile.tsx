@@ -1,7 +1,7 @@
 import { FC, useState, useMemo, useEffect, useContext, useCallback } from "react";
 import Header from "../shared/header/header";
 import Footer from "../shared/footer/footer";
-import { View, Text, TextInput, Button, Dimensions } from "react-native";
+import { View, Text, TextInput, Button } from "react-native";
 import { NetflixShowData, UserSettings } from "../utilities/interfaces";
 import { defaultUserSettings, genresList, sampleData } from "../utilities/constants";
 import NetflixShow from "./netflixShows/netflixShow";
@@ -10,6 +10,8 @@ import { FormProvider, useForm } from 'react-hook-form';
 import GenreDropdown from "../shared/genreDropdown";
 import { getAccountSettingsRequest } from "../shared/api-calls/apiCalls";
 import { LoginContext, LoginContextType } from "../utilities/contexts";
+import { mainPageStyles } from "./styles/mobileStyles";
+import Loader from "./Loader";
 
 export const MainPageMobile: FC = () => { 
     const [menuOpen, setMenuOpen] = useState(false);
@@ -93,28 +95,26 @@ export const MainPageMobile: FC = () => {
         return filteredShowsArray;
       }, [showsArray, accountSettings]);
 
-      const windowsHeight = Dimensions.get('window').height;
-
     return ( 
-        <View style={{ height: "100%", display: "flex", flexDirection: "column", minHeight: windowsHeight }} >
+        <View style={mainPageStyles.mainPageContainer} >
             <Header setMenuOpen={setMenuOpen} setModalOpen={setModalOpen} showSlideinButton={true} />
 
-            <View style={{ marginTop: 60, paddingBottom: 12, flex: 1 }} >
-                <Text style={{ fontSize: 20, color: "red", fontWeight: "bold" }}>
+            <View style={mainPageStyles.siteBody} >
+                <Text style={mainPageStyles.announcement}>
                     These are the top shows on netflix RIGHT NOW!
                 </Text>
                 {isStockData && 
-                    <Text style={{ marginBottom: 4, fontSize: 14, color: "black", fontWeight: "bold", fontStyle: "italic" }}>
+                    <Text style={mainPageStyles.stockDataNote}>
                         *This is stock data, please search by keyword or genre to get real data.
                     </Text>
                 }
 
-                <View style={{ display: "flex", alignItems: "center", maxWidth: 1366, marginTop: 0, marginBottom: 0, marginLeft: "auto", marginRight: "auto" }}>
-                    <View style={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}>
+                <View style={mainPageStyles.netflixShowsContainer}>
+                    <View style={mainPageStyles.netFlixShowsList}>
                         {loading ?
-                        <View className="lds-dual-ring"/>
+                        <Loader />
                         : errorMessage !== "" ? (
-                            <Text style={{ fontSize: 14, color: "red" }}>{errorMessage}</Text>
+                            <Text style={mainPageStyles.errorMsg}>{errorMessage}</Text>
                             ) : 
                             filteredArray.length > 0 ?
                             (
@@ -132,32 +132,31 @@ export const MainPageMobile: FC = () => {
 
                 <FormProvider { ...methods }>
                   <form name="test-form" className="netflix-form" onSubmit={(e) => e.preventDefault()}>
-                    <View style={{ display: "flex", flexDirection: "row" }}>
-                      <Text style={{ minWidth: "auto", textAlign: "right", marginTop: 24, marginBottom: 10, marginRight: 16, color: "blue", fontWeight: "bold", fontSize: 16, flexGrow: 3, flexShrink: 1 }}>
+                    <View style={mainPageStyles.aiSearchSection}>
+                      <Text style={mainPageStyles.searchHeader}>
                         Would you like to search using AI results and below genre filter?
                       </Text>
-                      <View style={{ minWidth: "auto", flex: 2, display: "flex", alignItems: "flex-end", marginBottom: 8, marginRight: 8, justifyContent: "center" }}>
+                      <View style={mainPageStyles.buttonContainer}>
                         <Button title="Submit" onPress={() => searchByGenre()} disabled={loading} /> 
                       </View>
                     </View>
 
-                    <Text style={{ minWidth: "auto", textAlign: "right", marginTop: 24, marginBottom: 10, marginRight: 16, color: "blue", fontWeight: "bold", fontSize: 16 }}>Would you like to narrow down by genre?</Text>
+                    <Text style={mainPageStyles.searchHeader}>Would you like to narrow down by genre?</Text>
                       <GenreDropdown 
                         selectedGenre={selectedGenre} 
                         genres={genresList} 
                         onChangeHandler={onChangeHandler} 
                         register={() => register("genres")} 
                       />
-                    <Text style={{ minWidth: "auto", textAlign: "right", marginTop: 24, marginBottom: 10, marginRight: 16, color: "blue", fontWeight: "bold", fontSize: 16 }}> 
-                      <View style={{ flexDirection:'row', flexWrap:'wrap'} }>Or search by your own keywords: </View>
+                    <Text style={mainPageStyles.searchHeader}> 
+                      <View style={mainPageStyles.searchBy}>Or search by your own keywords: </View>
                     </Text>
-                    <TextInput style={{ minWidth: "auto", marginRight: 10 }} {...register("searchbar")} editable={loading} />
-                    <View style={{ marginLeft: "33%", width: "33%", marginBottom: 8, justifyContent: "center" }}>
+                    <TextInput style={mainPageStyles.searchbar} {...register("searchbar")} editable={loading} />
+                    <View style={mainPageStyles.submitButtonContainer}>
                       <Button title="Submit" onPress={() => searchByUserInput()} disabled={loading} />
                     </View>
                 </form>
               </FormProvider>
-
             </View>
 
             <Footer />
