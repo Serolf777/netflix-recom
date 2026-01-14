@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router";
+import { Routes, Route, HashRouter } from "react-router-dom";
 import MainPage from "./main-page/MainPage.tsx";
 import AccountPage from "./account-page/accountPage.tsx";
 import "./styles/netflixRecom.scss";
@@ -8,10 +8,12 @@ export default function App() {
     return (
         <div className="App">
             <LoginContextProvider>
-                <Routes>
-                    <Route exact path="/" element={<MainPage />} />
-                    <Route exact path="/account-page" element={<AccountPage />}/>
-                </Routes>
+                <HashRouter>
+                    <Routes>
+                        <Route exact path="/" element={<MainPage />} />
+                        <Route exact path="/account-page" element={<AccountPage />}/>
+                    </Routes>
+                </HashRouter>
             </LoginContextProvider>
         </div>
     )
