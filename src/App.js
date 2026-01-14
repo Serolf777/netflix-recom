@@ -10,8 +10,8 @@ export default function App() {
             <LoginContextProvider>
                 <HashRouter>
                     <Routes>
-                        <Route exact path="/" element={<MainPage />} />
-                        <Route exact path="/account-page" element={<AccountPage />}/>
+                        <Route path="/" element={<MainPage />} />
+                        <Route path="/account-page" element={<AccountPage />}/>
                     </Routes>
                 </HashRouter>
             </LoginContextProvider>
